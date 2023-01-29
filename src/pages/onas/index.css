@@ -1,0 +1,205 @@
+html {
+	font-size: calc(16px + 0.6vw);
+}
+
+:root {
+	--color_tertiary: #558ED9;
+	--color_secondary: #3C4359;
+	--color_primary: #1F438C;
+	--color_contrast: #1BA300;
+}
+
+body {
+	/*Setting page background color*/
+	background-color: var(--color_secondary);
+	color: white;
+	text-size-adjust: none;
+}
+
+/*
+------------------
+| Navbar-common |
+------------------
+*/
+
+
+.navbar-mobile-container,
+.navbar-desktop-container {
+	background-color: var(--color_primary);
+	padding: 10px 20px;
+
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+/*
+------------------
+| Navbar-desktop |
+------------------
+*/
+
+.navbar-desktop-icon {
+	background-color: var(--color_tertiary);
+
+	display: flex;
+	align-items: center;
+	column-gap: 25px;
+
+	align-self: stretch;
+	padding: 5px 15px;
+}
+.navbar-desktop > li,
+.navbar-desktop-icon > h1 {
+	font-size: 1.5rem;
+}
+
+.navbar-desktop-icon > img {
+	height: 1.8rem;
+}
+
+.navbar-desktop {
+	display: flex;
+	column-gap: 2.5vw;
+}
+
+.navbar-desktop > li {
+	/*Ungodly hack - should remove if you know how to fix the damm button top space*/
+	display: flex;
+	align-items: center;
+
+	padding: 0.7rem;
+	background-color: var(--color_contrast);
+	/*filter: drop-shadow(8px 4px 10px black);*/	
+	border-radius: 0.3rem;
+}
+
+/*
+------------------
+| Navbar-mobile |
+------------------
+*/
+
+.navbar-mobile {
+	height: 50px;
+}
+.navbar-mobile-icon {
+	background-color: var(--color_tertiary);
+
+	display: flex;
+	align-items: center;
+	column-gap: 25px;
+
+	align-self: stretch;
+	padding: 5px 15px;
+}
+
+.navbar-mobile-container > img {
+	height: 1.9rem;
+}
+
+.navbar-mobile-icon > img {
+	height: 1.8rem;
+}
+
+
+.navbar-mobile-menu-container {
+	display: flex;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 100vw;
+	width: 100vw;
+	z-index: 10;
+	transition: right 0.5s;
+}
+
+.navbar-mobile-menu-overlay {
+	flex-grow: 1;
+}
+
+.navbar-mobile-menu {
+	width: 65vw;
+	background-color: var(--color_primary);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 2vh;
+	padding-top: 5vh;
+}
+
+.navbar-mobile-menu > li {
+	padding: 0.7rem;
+	background-color: var(--color_contrast);
+	/*filter: drop-shadow(8px 4px 10px black);*/
+	
+	border-radius: 0.3rem;
+}
+
+/*
+------------------
+| Navbar-media-query |
+------------------
+*/
+
+@media (max-width: 660px) {
+	.navbar-mobile-container {
+		display: flex;
+	}
+
+	.navbar-desktop-container {
+		display: none;
+	}
+}
+
+@media (min-width: 660px) {
+	.navbar-desktop-container {
+		display: flex;
+	}
+
+	.navbar-mobile-container {
+		display: none;
+	}
+}
+
+/*
+------------------
+| Content |
+------------------
+*/
+.content-container {
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+}
+
+.content {
+	max-width: 90ch;
+}
+
+
+/* Cleaning up */
+a {
+	color: inherit;
+	text-decoration-line: none;
+	margin: none;
+}
+
+
+* {
+	font-size: 1rem;
+}
+
+ul { 
+	list-style: none;
+	margin: 0px;
+	padding-left: 0px;
+}
+
+body {
+	margin: 0px;
+}
