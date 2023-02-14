@@ -1,6 +1,0 @@
-to build ```make 1```
-
-ADD ACTUAL MARKERS
-src/components are just html shortcuts - WARNING two component references in one page is illegal
-
-add if exists function check if css exits before 

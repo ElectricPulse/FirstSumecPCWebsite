@@ -1,0 +1,9 @@
+.footer {
+	margin-top: auto;
+	padding: 1vw 3vw;
+	background-color: var(--color_secondary);
+}
+
+.footer > * {
+	font-size: 0.7rem;
+}
