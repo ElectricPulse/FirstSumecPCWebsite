@@ -10,9 +10,8 @@ module.exports = {
 	devServer: {
   		historyApiFallback: true,
 		port: 80,
-		host: "127.0.0.1",
 		proxy: {
-			'/api': 'https://localhost:81',
+			'/api': 'http://localhost:81',
 		},
   	},
 	resolve: {

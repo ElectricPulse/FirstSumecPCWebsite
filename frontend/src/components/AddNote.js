@@ -44,7 +44,7 @@ const AddNote = () => {
 			console.log("failed to add note")
 		})
 
-		const url = `http://localhost/api/addnote`
+		const url = '/api/addnote'
 		XHR.open('POST', url)
 		XHR.send(payload)
 		return false
