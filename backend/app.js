@@ -3,7 +3,7 @@ const formidable = require('formidable')
 const fs = require('fs')
 const path = require('path')
 
-const port = 850
+const port = 80
 
 const frontendPath = path.join(__dirname, '../frontend/dist/')
 

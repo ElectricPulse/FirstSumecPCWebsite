@@ -10,7 +10,7 @@ module.exports = {
 	devServer: {
   		historyApiFallback: true,
 		port: 80,
-		host: "127.0.0.1",
+		host: "localhost",
   	},
 	resolve: {
 				roots: [path.resolve('./src')]
