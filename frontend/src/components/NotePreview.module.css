@@ -1,0 +1,34 @@
+.note {
+	background-color: white;
+	color: black;
+	display: flex;
+	justify-content: space-between;
+	padding: 2rem 2rem;
+}
+
+.title {
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--color_contrast);
+	padding: 0.5rem 1.5rem;
+	align-items: center;
+}
+
+.container h3:first-of-type {
+	font-size: 1rem;
+}
+
+.title h3:last-of-type {
+	border-radius: 5px;
+	background-color: var(--color_primary);
+	padding: 0.5rem;
+	display:  block;
+}
+
+.images {
+	
+}	
+
+.images > img {
+	width: 5rem;
+}

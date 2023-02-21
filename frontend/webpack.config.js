@@ -2,11 +2,18 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const path = require('path');
 const htmlPlugin = new HtmlWebPackPlugin({
 	template: "./src/index.html",
-	filename: "./index.html"
+	filename: "index.html"
 });
 
 module.exports = {
 	mode: 'development',
+	context: __dirname,
+	entry: './src/index.js',
+	output: {
+		path: path.resolve(__dirname, 'out'),
+		filename: 'main.js',
+		publicPath: '/',
+	},
 	devServer: {
   		historyApiFallback: true,
 		port: 80,

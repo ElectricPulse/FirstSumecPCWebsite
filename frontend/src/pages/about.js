@@ -1,6 +1,5 @@
 import React from 'react'
 import Content from '/components/Content'
-import Gamca from '/images/gamca.jpg'
 import './about.css'
 import './common.css'
 
@@ -13,7 +12,7 @@ const about = () => {
 			<p>
 				Sme koalícia nespokojných študentov z Gymnázia Gamča, ktorí sa rozhodli vytvoriť vlastnú databázu poznámok z predmetov, kedy je lepšie dávať pozor na hodine a nie písať si poznámky. Keby ste chceli pomocť so stránkov napíšte mi na: adam.labuznik@gmail.com 
 			</p>
-			<img src={Gamca}/>
+			<img src="/api/images/gamca.jpg"/>
 		</Content>
 	)	
 }

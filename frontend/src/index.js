@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Index from '/pages/index.js';
 import About from '/pages/about.js';
+import Note from '/pages/note.js';
 import Error from '/pages/error.js';
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
 				<Route path="/">
 					<Route index element={<Index/>}/>
 					<Route path="about" element={<About/>}/>
+					<Route path="note/:id" element={<Note/>}/>
 					<Route path="*" element={<Error/>}/>
 				</Route>
 			</Routes>

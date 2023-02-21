@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import logo from '/images/sumec.png'
 import './Navbar.css'
 
 const Navbar = () => {
@@ -11,7 +10,7 @@ const Navbar = () => {
 				<Link to="/">Poznámky</Link>
 			</nav>
 			<div className="logo">
-				<img src={logo}/>
+				<img src="/api/images/sumec.png"/>
 			</div>
 		</header>
 	)
