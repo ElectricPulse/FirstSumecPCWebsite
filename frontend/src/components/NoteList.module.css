@@ -1,7 +1,11 @@
-.notes-list {
+.form {
+	display: flex;
+}
+
+.list {
 	display: flex;
 	flex-direction: column;
+	align-items: stretch;
 	background-color: var(--color_tertiary);
-	padding: 3rem 5rem;
 	gap: 2rem;
 }

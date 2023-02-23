@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react'
 import React from 'react'
-import './AddNote.css'
+import styles from './AddNote.module.css'
 
 
-const AddNote = () => {
+const AddNote = (props) => {
 	const nameRef = useRef();
 	const authorRef = useRef();
 	const dateRef = useRef();
@@ -41,10 +41,12 @@ const AddNote = () => {
 		XHR.addEventListener('load', (ev) => {
 			if(XHR.status == 201){
 				setError(false)
-				setErrorReason(null)
+				setErrorReason(false)
+				props.onCompletion(false);
 			} else {
 				setError(true)
 				setErrorReason("because y9u suck")
+				props.onCompletion(true);
 			}
 		})
 
@@ -59,23 +61,25 @@ const AddNote = () => {
 	}
 
 	return (
-		<>
-		<form className="addnote" onSubmit={handleSubmit}>
+		<section className={styles.container}>
+			<button onClick={props.onClose}>
+				<img src="/api/images/cross.svg"/>
+			</button>
+		<form className={styles.form} onSubmit={handleSubmit}>
 			<label htmlFor="author">Author: </label>
-			<input type="text" id="author" ref={authorRef}/>
+			<input placeholder="Jozko Mrkvicka" required type="text" id="author" ref={authorRef}/>
 
 			<label htmlFor="name">Note Name: </label>
-			<input id="name" type="text" ref={nameRef}/>
+			<input placeholder="Horvathove poucky o silach" required id="name" type="text" ref={nameRef}/>
 			
 			<label htmlFor="date">Date: </label>
-			<input id="date" type="date" ref={dateRef}/>
+			<input  required id="date" type="date" ref={dateRef}/>
 
 			<label htmlFor="files">Photos: </label>
-			<input id="files" type="file" accept="image/png, image/jpeg" multiple ref={filesRef}/>
+			<input required id="files" type="file" accept="image/png, image/jpeg" multiple ref={filesRef}/>
 			
 			<label htmlFor="description">Description: </label>
-			<textarea id="description" ref={descriptionRef}>
-			</textarea>
+			<textarea placeholder="Prva fotka je opis Newtnovych zakonov" id="description" required ref={descriptionRef}></textarea>
 			
 			<select name="subject" ref={subjectRef}>
 				<option>Mat</option>
@@ -86,9 +90,7 @@ const AddNote = () => {
 			</select>
 			<input type="submit"/>
 		</form>
-		{error && errorReason && <h1>Error: {errorReason} </h1>}
-		{!error && !errorReason && <h1>Sucesfully added</h1>}
-		</>
+		</section>
 	)
 }
 	

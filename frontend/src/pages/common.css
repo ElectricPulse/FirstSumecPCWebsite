@@ -1,5 +1,5 @@
 html {
-	font-size: calc(15px + 0.5vw);
+	font-size: calc(13px + 0.7vw);
 }
 
 :root {
@@ -9,6 +9,12 @@ html {
 	--color_contrast: #1BA300;
 	--color_navbar: var(--color_primary);
 	--color_background: var(--color_tertiary);
+}
+
+#app {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
 }
 
 h1,
@@ -26,6 +32,7 @@ body {
 
 * {
 	font-size: 1rem;
+	box-sizing: border-box;
 }
 
 /* Cleaning up */

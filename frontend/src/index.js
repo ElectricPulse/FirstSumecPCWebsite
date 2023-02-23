@@ -8,6 +8,9 @@ import About from '/pages/about.js';
 import Note from '/pages/note.js';
 import Error from '/pages/error.js';
 
+import eruda from 'eruda'
+eruda.init()
+
 const App = () => {
 	return (
 		<BrowserRouter>

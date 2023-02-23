@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import NotePreview from './NotePreview.js'
-import './NoteList.css'
+import styles from './NoteList.module.css'
+import settings from '@shared/settings.json'
 
 function fetchNotes(setNotes) {
 	fetch('/api/listnotes')
@@ -16,9 +17,17 @@ function main() {
 		fetchNotes(setNotes)
 	})
 return (
-	<ul className="notes-list">
+	<>
+	<form className={styles.form}>
+		<input/>
+		<select>
+			{settings.subjects.map((subject) => <option key={subject}>{subject}</option>)}
+		</select>
+	</form>
+	<ul className={styles.list}>
 		{notes.map((note) => <NotePreview key={note.id} note={note}/>)}
 	</ul>
+	</>
 )
 }
 

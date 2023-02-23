@@ -11,7 +11,7 @@ function getTime(date)  {
 const Note = (props) => {
 	const note = props.note
 	return (
-		<li className={styles.contaier}>
+		<li className={styles.container}>
 		<div className={styles.title}> 
 			<h3>{note.name}</h3>	
 			<h3>{note.subject}</h3>	

@@ -1,9 +1,19 @@
+@media only screen and (max-width: 600px) {
+	.note {
+		flex-direction: column;
+	}
+
+	.container {
+		width: 100%;
+	}
+}
+
 .note {
 	background-color: white;
 	color: black;
 	display: flex;
 	justify-content: space-between;
-	padding: 2rem 2rem;
+	padding: 2vw 2vw;
 }
 
 .title {
@@ -30,5 +40,5 @@
 }	
 
 .images > img {
-	width: 5rem;
+	max-width: 5rem;
 }

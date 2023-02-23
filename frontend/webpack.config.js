@@ -22,7 +22,10 @@ module.exports = {
 		},
   	},
 	resolve: {
-				roots: [path.resolve('./src')]
+				roots: [path.resolve('./src')],
+				alias: {
+					"@shared": path.resolve(__dirname, "../shared"),
+				}
 		},
 	module: {
 		rules: [
@@ -40,7 +43,7 @@ module.exports = {
 			{
 				test: /\.(png|jpe?g|svg)$/i,
 				loader: 'file-loader'
-			}
+			},
 		]
 	},
 	plugins: [htmlPlugin]

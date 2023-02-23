@@ -1,4 +1,5 @@
 .footer {
+	align-self: stretch;
 	margin-top: auto;
 	padding: 1vw 3vw;
 	background-color: var(--color_secondary);

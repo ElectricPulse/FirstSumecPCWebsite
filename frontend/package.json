@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-	"start-dev-server": "webpack serve --host 0.0.0.0 --config webpack.config.js",
-	"compile": "webpack build --config webpack.config.js"
+    "start-dev-server": "webpack serve --host 0.0.0.0 --config webpack.config.js",
+    "compile": "webpack build --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "babel-loader": "^9.1.2",
+    "eruda": "^2.11.2",
     "file-loader": "^6.2.0",
     "http-proxy": "^1.18.1",
     "react": "^18.2.0",

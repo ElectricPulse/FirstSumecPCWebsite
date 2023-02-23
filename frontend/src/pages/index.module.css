@@ -1,0 +1,67 @@
+@media only screen and (min-width: 600px) {
+	.notification {
+		left: 50%;
+		transform: translateX(-50%);
+	}	
+}
+
+.notification-open {
+	opacity: 100;
+}
+
+.notification-closed {
+	opacity: 0;
+}
+
+.notification-success {
+	background-color: green;
+}
+
+.notification-error {
+	background-color: red;
+}
+
+.notification {
+	position: fixed;
+	top: 0;
+	text-align: center;
+
+	color: white;
+	font-weight: bold;
+	font-size: 1.2rem;
+	border: none;
+	padding-block: 3vh;
+	filter: drop-shadow(0 30px 50px #000);
+	transition: opacity 3s;
+	z-index: 3;
+}
+
+.index {
+	display: flex;
+	flex-direction: column;
+	gap: 5rem;
+}
+
+.button {
+	border-radius: 12px;
+	width: 4rem;
+	height: 4rem;
+	font-size: 3rem;
+	border: none;
+	background-color: var(--color_contrast);
+	color: white;
+	font-weight: bold;
+}
+
+.cta > label {
+	font-size: 1.5rem;
+}
+
+.cta {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	padding: 2vw;
+	background-color: var(--color_secondary);
+}

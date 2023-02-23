@@ -58,7 +58,7 @@ const main = (props) => {
 	const note = props.note
 	return (
 		<>
-		<li className={styles.container}>
+		<div className={styles.container}>
 		<div className={styles.title}> 
 			<h3>{note.name}</h3>	
 			<h3>{note.subject}</h3>	
@@ -79,7 +79,7 @@ const main = (props) => {
 			}
 			</Link>
 		</div>
-		</li>
+		</div>
 		<GalleryDialog onExit={() => setImageVis(false)} 
 			open={imageVis} index={imageIndex} images={note.images} 
 			onLeft={() => setImageIndex(imageIndex-1)} onRight={() => setImageIndex(imageIndex+1)}
