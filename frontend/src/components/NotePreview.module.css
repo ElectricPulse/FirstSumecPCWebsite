@@ -8,12 +8,33 @@
 	}
 }
 
-.note {
+.horizontalRuler {
+	width: 60%;
+}
+
+.noteContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 1vw;
 	background-color: white;
+	align-items: center;
+	padding: 2vw 2vw;
+}
+
+.button {
+	padding: 0.5rem 1rem;
+	background-color: var(--color_contrast);
+	color: white;	
+	border: none;
+	border-radius: 5px;
+}	
+
+.note {
+
 	color: black;
 	display: flex;
 	justify-content: space-between;
-	padding: 2vw 2vw;
+
 }
 
 .title {

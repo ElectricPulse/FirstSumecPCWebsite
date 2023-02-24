@@ -2,6 +2,7 @@ const express = require ('express')
 const formidable = require('formidable')
 const path = require('path')
 const db = require('../database/database.js')
+const settings = require('../shared/settings.json')
 
 const port = 81
 
@@ -26,9 +27,13 @@ const addnote = (req, res) => {
 
 		if(!/\d{4}-\d{2}-\d{2}/.test(fields.date))
 			return sendResponse(res, true)
-
-		if(!/Mat|Mam|Bio|Geo|Chem/.test(fields.subject))
-			return sendResponse(res, true)
+		
+		let i = 0
+		while(settings.subjects[i++] != fields.subject) {
+			debugger
+			if(i == settings.subjects.length)
+				return sendResponse(res, true)
+		}
 		
 		db.copyImages(files, fields)
 

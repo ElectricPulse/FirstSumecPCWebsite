@@ -1,11 +1,61 @@
+	
+
 .form {
 	display: flex;
+	background-color: white;
+	color: black;
+	padding: 2vw;
+	gap: 2vh;
+	width: 80vw;
+}
+
+.form > input {
+	width: 0;
+	flex-grow: 1;
+}
+
+.form > select {
+	align-self: flex-start;
+}
+
+@media only screen and (max-width: 600px) {
+	.form {
+		flex-direction: column;
+		justify-items: stretch;
+	}
+
+	.form > input {
+		width: auto;
+	}
+}
+.notfound {
+	font-weight: bold;
+	font-size: 1.2rem;
+	padding: 1rem;
+	background-color: var(--color_primary);
+	border-style: solid;
+	border-radius: 10px;
+	border-width: 5px;
+	border-color: red;
+}
+
+.container {
+	background-color: var(--color_secondary);
+	padding: 3vw;
+	display: flex;
+	gap: 5vh;
+	flex-direction: column;
+	align-items: center;
+}
+
+.horizontalRuler {
+	width: 50%;
 }
 
 .list {
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
-	background-color: var(--color_tertiary);
 	gap: 2rem;
+
 }

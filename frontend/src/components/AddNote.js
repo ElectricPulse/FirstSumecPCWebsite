@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import React from 'react'
 import styles from './AddNote.module.css'
-
+import settings from '@shared/settings'
 
 const AddNote = (props) => {
 	const nameRef = useRef();
@@ -82,11 +82,7 @@ const AddNote = (props) => {
 			<textarea placeholder="Prva fotka je opis Newtnovych zakonov" id="description" required ref={descriptionRef}></textarea>
 			
 			<select name="subject" ref={subjectRef}>
-				<option>Mat</option>
-				<option>Mam</option>
-				<option>Bio</option>
-				<option>Geo</option>
-				<option>Chem</option>
+				{settings.subjects.map((subject) => <option>{subject}</option>)}
 			</select>
 			<input type="submit"/>
 		</form>

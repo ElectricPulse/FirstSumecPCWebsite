@@ -1,14 +1,23 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const webpack = require('webpack')
 const path = require('path');
-const htmlPlugin = new HtmlWebPackPlugin({
-	template: "./src/index.html",
-	filename: "index.html"
-});
+const HWP = require('html-webpack-plugin')
 
-module.exports = {
+module.exports = (env) => {
+	
+
+	return {
 	mode: 'development',
 	context: __dirname,
 	entry: './src/index.js',
+	plugins: [
+		new HWP({
+			filename: 'index.html',
+			template: './src/index.html',
+		}),
+		new webpack.DefinePlugin({
+			_ERUDA: env.ERUDA
+		}),
+	],
 	output: {
 		path: path.resolve(__dirname, 'out'),
 		filename: 'main.js',
@@ -46,5 +55,5 @@ module.exports = {
 			},
 		]
 	},
-	plugins: [htmlPlugin]
+	}
 };

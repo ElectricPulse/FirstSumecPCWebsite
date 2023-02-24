@@ -1,3 +1,6 @@
+.about {
+	padding: 2vw;
+}
 .about > h1 {
 	font-size: 1rem;
 	background-color: var(--color_contrast);
@@ -6,5 +9,5 @@
 }
 
 .about > img {
-	width: 80%;
+	width: 50%;
 }

@@ -2,14 +2,8 @@ import React, { useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import styles from './Note.module.css'
+import getTimeDifference from '/utils/getTimeDifference'
 
-function getTime(date)  {
-	const current = new Date()
-	const noteDate = new Date(date)
-	const diffTime = current - noteDate
-	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-	return diffDays
-}
 
 function Arrow(props) {
 	return (
@@ -68,7 +62,7 @@ const main = (props) => {
 				Autor: {note.author}
 			</div>
 			<div>
-				Dátum hodiny: pred {getTime(note.date)} dňami
+				Dátum hodiny: pred {getTimeDifference(note.date)} dňami
 			</div>
 			<div>
 				Popis: {note.description}
