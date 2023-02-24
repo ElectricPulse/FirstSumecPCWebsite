@@ -1,0 +1,36 @@
+@media only screen and (min-width: 600px) {
+	.notification {
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}
+
+.notification[visible="false"] {
+	opacity: 0;
+}
+
+.notification[visible="true"] {
+	opacity: 100;
+}
+
+.success {
+	background-color: green
+}
+
+.failure {
+	background-color: red;
+}
+
+.notification {
+	position: fixed;
+	top: 0;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	font-size: 1.2rem;
+	border: none;
+	padding-block: 3vh;
+	filter: drop-shadow(0 30px 50px #000);
+	transition: opacity 3s;
+	z-index: 3;
+}

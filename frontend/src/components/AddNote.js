@@ -82,7 +82,7 @@ const AddNote = (props) => {
 			<textarea placeholder="Prva fotka je opis Newtnovych zakonov" id="description" required ref={descriptionRef}></textarea>
 			
 			<select name="subject" ref={subjectRef}>
-				{settings.subjects.map((subject) => <option>{subject}</option>)}
+				{settings.subjects.map((subject) => <option key={subject}>{subject}</option>)}
 			</select>
 			<input type="submit"/>
 		</form>
