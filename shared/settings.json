@@ -1,3 +1,4 @@
 {
-	"subjects": ["Mat", "Mam", "Geo", "Bio", "Fyz", "Chem"]
+	"subjects": ["Mat", "Mam", "Geo", "Bio", "Fyz", "Chem"],
+	"serverPort": 3000
 }

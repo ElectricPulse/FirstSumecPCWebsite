@@ -5,8 +5,6 @@ const db = require('../database/database.js')
 const settings = require('../shared/settings.json')
 const crypto = require('crypto')
 
-const port = 81
-
 const app = express()
 
 const sendResponse = (res, error) => {
@@ -43,22 +41,17 @@ const addnote = (req, res) => {
 }
 
 app.post('/api/register', (req,res) => {
-	const password;
-	const username;
-	const email;
+	req.json()
+	.then((data) => {
+	const { username, password, email } = data
 	
 
-	const token = ""
-	crypto.randomBytes(48, (error, buffer) => {
-		crypto.buffer.toString('hex')}
+	db.preRegister(username, email, password, (error) => {
 		if(error)
-			sendResponse(res, 1)
+			return sendResponse(res, 1)
+		return sendResponse(res, 0)
 	})
-	
-	//Generate entry in unvalidate_users table
-	db.insertUnvalidated
-
-	//send email
+	})
 })
 
 app.post('/api/addnote', (req, res) => {
@@ -99,6 +92,6 @@ app.get('*', (req, res) => {
 	res.sendFile(path.resolve('../frontend/dist/index.html'))
 })	
 
-app.listen(port, () => {
-	console.log(`Server running at http://${port}/`)
+app.listen(settings.serverPort, () => {
+	console.log(`Server running at :${settings.serverPort}`)
 })

@@ -98,6 +98,20 @@ function getNote(note_id, callback) {
 	})
 }
 
+function preRegister(username, email, password, callback) {
+	crypto.randomBytes(48, (error, buffer) => {
+		if(error)
+			return callback(1)
+		
+		crypto.buffer.toString('hex')
+		//Generate entry in unvalidate_users table
+
+		//send email
+		callback(0)
+	})
+
+}
+
 function listNotes(callback) {
 	const command = `
 	SELECT notes.*, JSON_ARRAYAGG(notes_images.filename)
@@ -154,4 +168,5 @@ module.exports = {
 	copyImages,
 	listNotes,
 	getNote,
+	preRegister,
 }
