@@ -3,6 +3,7 @@ const formidable = require('formidable')
 const path = require('path')
 const db = require('../database/database.js')
 const settings = require('../shared/settings.json')
+const crypto = require('crypto')
 
 const port = 81
 
@@ -40,6 +41,25 @@ const addnote = (req, res) => {
 		sendResponse(res, db.insertNote(fields))
 	})
 }
+
+app.post('/api/register', (req,res) => {
+	const password;
+	const username;
+	const email;
+	
+
+	const token = ""
+	crypto.randomBytes(48, (error, buffer) => {
+		crypto.buffer.toString('hex')}
+		if(error)
+			sendResponse(res, 1)
+	})
+	
+	//Generate entry in unvalidate_users table
+	db.insertUnvalidated
+
+	//send email
+})
 
 app.post('/api/addnote', (req, res) => {
 	addnote(req, res)
