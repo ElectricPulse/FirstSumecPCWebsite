@@ -3,9 +3,11 @@ const formidable = require('formidable')
 const path = require('path')
 const db = require('../database/database.js')
 const settings = require('../shared/settings.json')
-const crypto = require('crypto')
-
 const app = express()
+const crypto = require('crypto')
+const nodemailer = require('nodemailer')
+
+app.use(express.json())
 
 const sendResponse = (res, error) => {
 	res.statusCode = error ? 500 : 201
@@ -41,16 +43,39 @@ const addnote = (req, res) => {
 }
 
 app.post('/api/register', (req,res) => {
-	req.json()
-	.then((data) => {
-	const { username, password, email } = data
-	
-
-	db.preRegister(username, email, password, (error) => {
-		if(error)
-			return sendResponse(res, 1)
-		return sendResponse(res, 0)
+	const { username, password, email } = req.body
+	const token = crypto.randomBytes(16).toString('hex')	
+	const transporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: settings.nodemailer.email,
+			pass: settings.nodemailer.password
+		}
 	})
+	
+	const mail = {
+		from: 'hackermansmurf1@gmail.com',
+		to: email,
+		subject: 'Overenie mailu, FirstSumecPC',
+		text: `
+		Ahoj, "${username}"
+		Aby si dokončil registráciu klikni na tento link:
+		http://authenticate/${token}
+		`,
+		secure: false
+	}
+
+	transporter.sendMail(mail, (error, info) => {
+		if(error)
+			return sendResponse(res, true)
+	})
+
+
+	db.preRegister({username, password, email, token}, (error) => {
+		if(error)
+			return sendResponse(res, true)
+		
+		sendResponse(res, false)
 	})
 })
 

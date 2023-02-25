@@ -1,11 +1,7 @@
 1: run
 
 
-run:	
-	./script.sh
+start-dev-server:	
+	./start.sh
 
-debug:
-	cd frontend; npm run start-dev-server &
-	$(MAKE) -C backend debug
-	killall webpack
 	

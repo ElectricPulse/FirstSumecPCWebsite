@@ -24,7 +24,6 @@ const main = forwardRef((props, ref) => {
 
 			setError(error)
 			setContent(message)
-			debugger
 		}
 	}))
 	

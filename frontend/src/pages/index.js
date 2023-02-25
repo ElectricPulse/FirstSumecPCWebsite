@@ -18,7 +18,7 @@ const main = () => {
 			<label>Pridať nové poznámky: </label>
 			<button className={styles.button} onClick={setVisible.bind(false)}>+</button>
 			</section> }
-			{ visible && <AddNote onClose={setVisible.bind(false)} onCompletion={(error) => {
+			{ visible && <AddNote onClose={() => setVisible(false)} onCompletion={(error) => {
 				notificationRef.current.notify(error ? "Something went wrong": "Succesfully added", error)
 				setVisible(error)
 			}}/> }

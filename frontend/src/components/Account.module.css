@@ -1,0 +1,39 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	max-width: 40ch;
+	background-color: var(--color_primary);
+	padding: 3vw 4vw;
+	gap: 0.8rem;
+}
+
+.form > input[type="submit"] {
+	align-self: center;
+}
+
+.container > h2 {
+	font-size: 2rem;
+}
+
+.form > input {
+	margin-inline: 0.5rem;
+
+}
+
+.form input {
+	padding: 0.3rem 0.8rem;
+}
+
+.form > fieldset {
+	display: flex;
+	gap: 3vw;
+	padding: 0;
+	border: none;
+}
+
+.form > fieldset > div {
+}
+
+.form > fieldset > div > input {
+	width: 100%;
+}	

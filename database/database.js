@@ -19,13 +19,11 @@ function makeId(length) {
 }	
 
 function insertNote(payload) {
-	debugger
 	const command = `
 	INSERT INTO notes (name, description, author, date, subject) 
 	VALUES ('${payload.name}', '${payload.description}', '${payload.author}', '${payload.date}', '${payload.subject}')
 	`
 	connection.query(command, (error, result) => {
-		debugger
 		for(let i = 0; i < payload.filenames.length; ++i){
 			const filename = payload.filenames[i]
 			const command_filename = `INSERT INTO notes_images (notes_id, filename) VALUES ('${result.insertId}', '${filename}')` 
@@ -98,17 +96,12 @@ function getNote(note_id, callback) {
 	})
 }
 
-function preRegister(username, email, password, callback) {
-	crypto.randomBytes(48, (error, buffer) => {
-		if(error)
-			return callback(1)
-		
-		crypto.buffer.toString('hex')
+function preRegister(data, callback) {
+	
 		//Generate entry in unvalidate_users table
 
 		//send email
 		callback(0)
-	})
 
 }
 

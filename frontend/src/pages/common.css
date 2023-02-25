@@ -1,10 +1,10 @@
 html {
-	font-size: calc(13px + 0.7vw);
+	font-size: calc(12.5px + 0.6vw);
 }
 
 :root {
 	--color_tertiary: #1a2036;
-	--color_secondary: #313e6b;
+	--color_secondary: #433594;
 	--color_primary: #1F438C;
 	--color_contrast: #1BA300;
 	--color_navbar: var(--color_primary);
@@ -26,7 +26,7 @@ h5 {
 }
 
 body {
-	background-color: var(--color_background);
+	background-color: var(--color_tertiary);
 	color: white;
 }
 
@@ -36,6 +36,11 @@ body {
 }
 
 /* Cleaning up */
+button {
+	background: none;
+	border: none;
+
+}
 dialog {
 	margin: 0;
 	padding: 0;

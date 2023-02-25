@@ -25,5 +25,5 @@
 	align-items: center;
 	gap: 1rem;
 	padding: 2vw;
-	background-color: var(--color_secondary);
+	background-color: var(--color_primary);
 }

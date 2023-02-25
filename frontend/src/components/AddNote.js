@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import React from 'react'
 import styles from './AddNote.module.css'
+import Button from './Button'
 import settings from '@shared/settings'
 
 const AddNote = (props) => {
@@ -84,7 +85,7 @@ const AddNote = (props) => {
 			<select name="subject" ref={subjectRef}>
 				{settings.subjects.map((subject) => <option key={subject}>{subject}</option>)}
 			</select>
-			<input type="submit"/>
+			<Button className={styles.submit} submit/>
 		</form>
 		</section>
 	)

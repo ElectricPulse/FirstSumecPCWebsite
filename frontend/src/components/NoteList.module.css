@@ -40,7 +40,7 @@
 }
 
 .container {
-	background-color: var(--color_secondary);
+	background-color: var(--color_primary);
 	padding: 3vw;
 	display: flex;
 	gap: 5vh;

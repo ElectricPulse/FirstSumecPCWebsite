@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path');
 const HWP = require('html-webpack-plugin')
+const settings = require('../shared/settings')
 
 module.exports = (env) => {
 	
@@ -27,7 +28,7 @@ module.exports = (env) => {
   		historyApiFallback: true,
 		port: 80,
 		proxy: {
-			'/api': 'http://localhost:81',
+			'/api': `http://localhost:${settings.serverPort}`,
 		},
   	},
 	resolve: {

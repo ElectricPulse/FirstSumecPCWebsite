@@ -1,5 +1,5 @@
 .container {
-	background-color: var(--color_secondary);
+	background-color: var(--color_primary);
 	padding: 5vh 8vw;
 	position: relative;
 }
@@ -21,7 +21,6 @@
 .form {
 	display: flex;
 	flex-direction: column;
-	gap: 1vh;
 }
 
 .form > *::placeholder {
@@ -29,31 +28,29 @@
 	font-size: 0.9rem;
 }
 .form > textarea,
-.form > input {
+.form > input[type="text"] {
 	border-radius: 6px;
 	border: none;
 	padding: 0.4rem 0.6rem;
 	width: 100%;	
 }
 
+.submit {
+	align-self: center;
+}
 
 .form > select {
-	align-self: center;
 	padding: 0.5rem 1.2rem;
+	align-self: center;
 	font-size: 1.2rem;
 }
 
-.form > *[type="submit"] {
-	margin-top: 1.5rem;
-	align-self: center;
-	padding: 0.8rem;
-	border-radius: 15px;
-	background-color: var(--color_contrast);
-	color: white;
-	font-size: 1.2rem;
-	font-weight: bold;
-	width: auto;
+.form > select,
+.form > textarea,
+.form > input {
+	margin-bottom: 1rem;
 }
+
 
 .form > textarea {
 	resize: none;

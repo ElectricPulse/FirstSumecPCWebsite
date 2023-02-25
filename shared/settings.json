@@ -1,4 +1,8 @@
 {
 	"subjects": ["Mat", "Mam", "Geo", "Bio", "Fyz", "Chem"],
-	"serverPort": 3000
+	"serverPort": 81,
+	"nodemailer": {
+		"email": "hackermansmurf1@gmail.com",
+		"password": "eohxbgprfyztqrom"
+	}
 }

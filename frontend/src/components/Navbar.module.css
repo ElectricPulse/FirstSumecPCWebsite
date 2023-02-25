@@ -1,0 +1,87 @@
+.header {
+	display: flex;
+	justify-content: space-between;	
+	padding: 0.5vw 1.5vw;
+	align-self: stretch;
+	padding: 1vw 2vw;
+	background: linear-gradient(135deg, var(--color_primary) 70%, var(--color_secondary) 100%);
+	position: sticky;
+	display: flex;
+	justify-content: space-between;
+	top: 0;
+	left: 0;
+	right: 0;
+	padding: 0.5vw 2vw;
+	align-items: center;
+	z-index: 2;
+}
+
+
+.navigationLeft {
+	display: flex;
+	align-items: center;
+	gap: 2vw;
+}
+
+.navigationLeft > a {
+	font-size: 1.1rem;
+	border-radius: 10px;
+	padding: 0.4rem 0.5rem;
+	background-color: var(--color_contrast);
+
+}
+
+.navigationRight {
+	gap: 2rem;
+	display: flex;
+	align-items: center;
+}
+
+.accountContainer{
+
+	position: relative;
+}
+
+.account > img {
+	height: calc(2.5rem + 2vw);
+}
+
+.navigationRight:hover .accountDropdownContainer {
+	display: flex;
+}
+.accountDropdownContainer {
+	top: calc(2.6rem + 2vw);
+	right: 40%;
+	position: absolute;
+	display: none;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.accountDropdown {
+	background-color: white;
+	color: black;
+	display: flex;
+	gap: 0.4rem;
+	flex-direction: column;
+	padding: 0.5rem 1rem;
+}
+
+.accountDropdown > a:hover {
+	transform: scale(1.05);
+}
+
+.triangle {
+	height: 0.5rem;
+	margin-right: 0.2rem;
+	display: flex;
+	font-size: 0;
+	box-sizing: content-box;
+}
+
+.logo {
+}
+
+.logo > img {
+	width: calc(3.5rem + 2vw);
+}

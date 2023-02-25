@@ -5,11 +5,11 @@
 	}
 }
 
-.notification[visible="false"] {
+.notification[data-visible="false"] {
 	opacity: 0;
 }
 
-.notification[visible="true"] {
+.notification[data-visible="true"] {
 	opacity: 100;
 }
 
@@ -31,6 +31,6 @@
 	border: none;
 	padding-block: 3vh;
 	filter: drop-shadow(0 30px 50px #000);
-	transition: opacity 3s;
+	transition: opacity 1s;
 	z-index: 3;
 }
