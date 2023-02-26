@@ -1,12 +1,9 @@
 const mysql = require('mysql')
 const fs = require('fs')
+const settings = require('../shared/settings.json')
 
-const connection = mysql.createConnection({
-	host: "localhost",
-	user: "root",
-	password: "",
-	database: "webserver"
-})
+
+const connection = mysql.createConnection(settings.database)
 
 function makeId(length) {
 	let result = '';
@@ -18,17 +15,32 @@ function makeId(length) {
 	return result
 }	
 
+function login(data, callback) {
+	const command = `
+	SELECT * FROM accounts
+	WHERE email=? AND password=?;
+	`
+	debugger
+	connection.query(command, [data.email, data.hashedPassword], (error, results) => {
+		debugger
+		callback(error, results.length == 1)
+	})
+}
+
 function insertNote(payload) {
 	const command = `
 	INSERT INTO notes (name, description, author, date, subject) 
-	VALUES ('${payload.name}', '${payload.description}', '${payload.author}', '${payload.date}', '${payload.subject}')
+	SELECT ?, ?, ?, ?, ?;
 	`
-	connection.query(command, (error, result) => {
+	connection.query(command,[payload.name, payload.description, payload.author, payload.date, payload.subject], (error, result) => {
 		for(let i = 0; i < payload.filenames.length; ++i){
 			const filename = payload.filenames[i]
-			const command_filename = `INSERT INTO notes_images (notes_id, filename) VALUES ('${result.insertId}', '${filename}')` 
+			const command_filename = `
+			INSERT INTO notes_images (notes_id, filename)
+			SELECT ?, ?;
+			` 
 
-			connection.query(command_filename, () => {})
+			connection.query(command_filename, [result.insertId, filename], () => {})
 		}
 	})
 
@@ -96,13 +108,47 @@ function getNote(note_id, callback) {
 	})
 }
 
-function preRegister(data, callback) {
-	
-		//Generate entry in unvalidate_users table
+function authMail(token, callback) {
+	const command = `
+	INSERT INTO accounts (username, password, email)
+	SELECT username, password, email
+	FROM preregister
+	WHERE token = ?;
+	DELETE FROM preregister
+	WHERE token = ?;
+	`
 
-		//send email
-		callback(0)
+	connection.query(command, [token, token], (error, results) => {
+		debugger
+		callback(error || results.affectedRows === 0)
+	})
+}
 
+function preRegister({username, hashedPassword, email, token}, callback) {
+	const command = `
+	INSERT INTO preregister (username, password, email, token) 
+	SELECT ?, ?, ?, ?
+	WHERE NOT EXISTS (
+		SELECT 1 FROM preregister WHERE email = ?
+	) AND NOT EXISTS (
+		SELECT 1 FROM accounts WHERE email = ?
+	);
+	`
+	connection.query(command, [username, hashedPassword, email, token, email, email], (error, results) => {
+		callback(error, results.affectedRows === 0)
+	})
+}
+
+function getUser(email, callback) {
+	const command = `
+	SELECT email, username
+	FROM accounts
+	WHERE email=?
+	`
+
+	connection.query(command, [email], (error, data) => {
+		callback(error, data[0])
+	})
 }
 
 function listNotes(callback) {
@@ -161,5 +207,8 @@ module.exports = {
 	copyImages,
 	listNotes,
 	getNote,
+	authMail,
 	preRegister,
+	login,
+	getUser, 
 }

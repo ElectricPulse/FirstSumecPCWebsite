@@ -8,4 +8,8 @@
 	background-color: var(--color_contrast);
 }
 
+.button[disabled] {
+	background-color: grey;
+}
+
 

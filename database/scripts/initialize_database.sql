@@ -7,9 +7,15 @@ USE webserver;
 
 CREATE TABLE preregister (
  	username varchar(64) NOT NULL,
-	password varchar(128) NOT NULL,
+	password char(128) NOT NULL,
 	email varchar(64) NOT NULL,
 	token char(16) NOT NULL
+);
+
+CREATE TABLE accounts (
+	username varchar(64) NOT NULL,
+	password char(128) NOT NULL,
+	email varchar(64) NOT NULL
 );
 
 CREATE TABLE notes (

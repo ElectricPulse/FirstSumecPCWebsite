@@ -7,7 +7,7 @@ function main(props) {
 	}
 
 	return props.submit ? 	
-			<input {...common} type="submit"/>  : 
+			<input {...common} disabled={props.disabled} type="submit"/>  : 
 			<button {...common} onClick={props.onClick}>{props.children}</button>		
 }
 

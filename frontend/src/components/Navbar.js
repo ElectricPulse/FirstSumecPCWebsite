@@ -1,8 +1,30 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styles from './Navbar.module.css'
 
-const Navbar = () => {
+function Dropdown() {
+	const state = useSelector((state) => state)	
+	console.log(state.user)
+	return (
+		<div className={styles.accountDropdown}>
+			{!state.token && <>
+				<Link to="/register">Registrovať</Link>
+				<Link to="/login">Prihlásiť</Link>
+			</>}
+			{state.token && <>
+				Welcome aboard captain:
+				<div>
+					<h4>{state.user.username}</h4>
+					<h5>{state.user.email}</h5>
+				</div>
+				<Link to="/unlogin">Odhlásiť</Link>
+			</>}
+		</div>
+	)
+}
+
+function main(){
 	return (
 		<header className={styles.header}>
 			<nav className={styles.navigationLeft}>
@@ -17,10 +39,7 @@ const Navbar = () => {
 
 				<div className={styles.accountDropdownContainer}>
 					<img className={styles.triangle} src="/api/images/triangle.svg"/>		
-					<div className={styles.accountDropdown}>
-					<Link to="/register">Registrovať</Link>
-					<Link to="/login">Prihlásiť</Link>
-					</div>
+					<Dropdown/>					
 				</div>
 				</div>
 				<Link to="/" className={styles.logo}>
@@ -33,4 +52,4 @@ const Navbar = () => {
 	)
 }
 
-export default Navbar
+export default main

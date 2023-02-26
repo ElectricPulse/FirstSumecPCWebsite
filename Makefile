@@ -1,7 +1,7 @@
-1: run
-
-
-start-dev-server:	
+run:	
 	./start.sh
+
+debug:
+	./start.sh debug
 
 	

@@ -7,6 +7,12 @@
 	gap: 0.8rem;
 }
 
+.form > h3 {
+	background-color: red;
+	color: white;
+	align-self: center;
+}
+
 .form > input[type="submit"] {
 	align-self: center;
 }

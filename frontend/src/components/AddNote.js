@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 import React from 'react'
 import styles from './AddNote.module.css'
 import Button from './Button'
 import settings from '@shared/settings'
 
 const AddNote = (props) => {
+	const token = useSelector(state => state.token)
 	const nameRef = useRef();
 	const authorRef = useRef();
 	const dateRef = useRef();
@@ -18,14 +20,12 @@ const AddNote = (props) => {
 	const handleSubmit = (ev) => {
 		ev.preventDefault()
 		const name = nameRef.current.value
-		const author = authorRef.current.value
 		const date = dateRef.current.value
 		const subject = subjectRef.current.value
 		const description = descriptionRef.current.value
 		
 		const payload = new FormData()
 		payload.append("name", name)
-		payload.append("author", author)
 		payload.append("date", date)
 		payload.append("subject", subject)
 		payload.append("description", description)
@@ -36,28 +36,25 @@ const AddNote = (props) => {
 			const file = fileList.item(i)
 			payload.append(file.name, file)
 		}
-
-		const XHR = new XMLHttpRequest();
-
-		XHR.addEventListener('load', (ev) => {
-			if(XHR.status == 201){
-				setError(false)
-				setErrorReason(false)
-				props.onCompletion(false);
-			} else {
-				setError(true)
-				setErrorReason("because y9u suck")
-				props.onCompletion(true);
+		
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', '/api/addnote')
+		xhr.setRequestHeader('Authorization', token)
+		xhr.onreadystatechange = function() {
+			if(this.readyState == 4){
+				if(this.status == 201) {
+					setError(false)
+					setErrorReason(false)
+					props.onCompletion(false);
+				} else {
+					setError(true)
+					setErrorReason("because y9u suck")
+					props.onCompletion(true);
+				}
 			}
-		})
+		}
 
-		XHR.addEventListener('error', (ev) => {
-			console.log("failed to add note")
-		})
-
-		const url = '/api/addnote'
-		XHR.open('POST', url)
-		XHR.send(payload)
+		xhr.send(payload)
 		return false
 	}
 
@@ -67,9 +64,6 @@ const AddNote = (props) => {
 				<img src="/api/images/cross.svg"/>
 			</button>
 		<form className={styles.form} onSubmit={handleSubmit}>
-			<label htmlFor="author">Author: </label>
-			<input placeholder="Jozko Mrkvicka" required type="text" id="author" ref={authorRef}/>
-
 			<label htmlFor="name">Note Name: </label>
 			<input placeholder="Horvathove poucky o silach" required id="name" type="text" ref={nameRef}/>
 			

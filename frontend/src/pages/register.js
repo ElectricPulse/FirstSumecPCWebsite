@@ -9,7 +9,7 @@ const main = () => {
 	const notificationRef = useRef()
 	return (
 		<Content name={styles.index}>
-			<Register onCompletion={(error) => notificationRef.current.notify(error ? "Something went wrong, couldnt register": "Sucessfully registered, check your email and verify next", error)}/>
+			<Register onCompletion={(error) => notificationRef.current.notify(error ? "Something went wrong, couldnt register (maybe email address is used)": "Sucessfully registered, check your email and verify next", error)}/>
 			<Notification ref={notificationRef}/>
 		</Content>
 	)	
