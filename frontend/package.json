@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-dev-server": "webpack serve --host 0.0.0.0 --config webpack.config.js",
-    "start-dev-server-mobile": "webpack serve --host 0.0.0.0 --config webpack.config.js --env ERUDA=true",
+    "start": "webpack serve --config webpack.config.js",
     "compile": "webpack build --config webpack.config.js"
   },
   "keywords": [],

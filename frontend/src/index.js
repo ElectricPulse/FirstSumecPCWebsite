@@ -15,10 +15,10 @@ import Unlogin from '/pages/unlogin';
 
 import store from './store.js'
 
-
+import settings from '@shared/settings.json'
 import eruda from 'eruda'
 
-if(_ERUDA) 
+if(settings.eruda) 
 	eruda.init()
 
 const App = () => {

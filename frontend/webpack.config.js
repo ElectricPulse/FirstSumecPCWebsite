@@ -3,6 +3,8 @@ const path = require('path');
 const HWP = require('html-webpack-plugin')
 const settings = require('../shared/settings')
 
+const currentSettings = settings.server.local ? settings.server.localhost : settings.server.host
+
 module.exports = (env) => {
 	
 
@@ -15,9 +17,6 @@ module.exports = (env) => {
 			filename: 'index.html',
 			template: './src/index.html',
 		}),
-		new webpack.DefinePlugin({
-			_ERUDA: env.ERUDA
-		}),
 	],
 	output: {
 		path: path.resolve(__dirname, 'out'),
@@ -26,9 +25,10 @@ module.exports = (env) => {
 	},
 	devServer: {
   		historyApiFallback: true,
-		port: 80,
+		port: currentSettings.port,
+		host: currentSettings.IP,
 		proxy: {
-			'/api': `http://localhost:${settings.serverPort}`,
+			'/api': `http://localhost:${currentSettings.port+1}`,
 		},
   	},
 	resolve: {

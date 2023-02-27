@@ -1,5 +1,5 @@
-run:
-	npm run start-dev-server
+start:
+	npm run start
 
 debug: 
 	npm run start-dev-server

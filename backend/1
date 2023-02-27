@@ -124,12 +124,12 @@ app.post('/api/register', (req,res) => {
 			text: `
 			Ahoj, "${username}"
 			Aby si dokončil registráciu klikni na tento link:
-			http://${currentSettings.ip}:${currentSettings.port}/authMail/${token}
+			http://${currentSettings.ip}/authMail/${token}
 			`
 		}	
 
 		transporter.sendMail(mail, (error, info) => {
-			if(error)
+			(error)
 				return sendResponseCreated(res, true)
 
 			sendResponseCreated(res, false)

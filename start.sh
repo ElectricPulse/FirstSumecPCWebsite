@@ -1,7 +1,7 @@
 if [ $1 == 'debug' ]; then
 		task="debug"
 else
-		task="run"
+		task="start"
 fi
 trap 'echo "Press q to exit"' INT
 setsid make -C backend $task 1>&1 &
