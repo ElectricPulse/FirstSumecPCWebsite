@@ -1,4 +1,4 @@
---Start from scratch
+/*Start from scratch*/
 CREATE DATABASE IF NOT EXISTS webserver;
 DROP DATABASE webserver;
 

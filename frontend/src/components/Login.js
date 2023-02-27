@@ -1,12 +1,12 @@
 import React, { useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch } from '/store.js'
 import styles from './Account.module.css'
 import Button from './Button'
 
 function main(props) {
 	const passwordRef = useRef()
 	const emailRef = useRef()
-	const dispatch = useDispatch() 
+	const dispatch = useDispatch()
 
 	function handleSubmit(event) {
 		event.preventDefault()
@@ -22,7 +22,7 @@ function main(props) {
 				if(this.status != 200)
 					return
 
-				dispatch({type: "SET_TOKEN", value: JSON.parse(this.responseText).accessToken})
+				dispatch("SET_TOKEN", JSON.parse(this.responseText).accessToken)
 			}
 
 		}

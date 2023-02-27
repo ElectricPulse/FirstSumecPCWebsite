@@ -2,7 +2,6 @@ const mysql = require('mysql')
 const fs = require('fs')
 const settings = require('../shared/settings.json')
 
-
 const connection = mysql.createConnection(settings.database)
 
 function makeId(length) {
@@ -22,8 +21,7 @@ function login(data, callback) {
 	`
 	debugger
 	connection.query(command, [data.email, data.hashedPassword], (error, results) => {
-		debugger
-		callback(error, results.length == 1)
+		callback(error, results?.length == 1)
 	})
 }
 
@@ -196,7 +194,7 @@ function listNotes(callback) {
 
 connection.connect((error) => {
 	if (error)
-		console.log("Failed to connect to MySQL")
+		console.log("Failed to connect to MySQL", error)
 
 	if(require.main === module) 
 		getNote(72, () => {})

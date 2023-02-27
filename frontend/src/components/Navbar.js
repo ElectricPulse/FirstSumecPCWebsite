@@ -1,11 +1,10 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, {useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Navbar.module.css'
+import { useSelector } from '/store.js'
 
 function Dropdown() {
-	const state = useSelector((state) => state)	
-	console.log(state.user)
+	const state = useSelector(s => s)
 	return (
 		<div className={styles.accountDropdown}>
 			{!state.token && <>

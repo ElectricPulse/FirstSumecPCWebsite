@@ -1,18 +1,18 @@
-import { useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import styles from './AddNote.module.css'
 import Button from './Button'
 import settings from '@shared/settings'
+import { useSelector } from '/store.js'
 
 const AddNote = (props) => {
-	const token = useSelector(state => state.token)
 	const nameRef = useRef();
 	const authorRef = useRef();
 	const dateRef = useRef();
 	const filesRef = useRef();
 	const subjectRef = useRef();
 	const descriptionRef = useRef();
+
+	const token = useSelector(s => s.token)
 
 	const [error, setError] = useState(false)
 	const [errorReason, setErrorReason] = useState('bruh')

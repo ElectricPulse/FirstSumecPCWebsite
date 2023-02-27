@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch } from '/store'
 import Content from '/components/Content'
 import Notification from '/components/Notification'
 import Login from '/components/Login'
@@ -11,7 +11,7 @@ const main = () => {
 	const dispatch = useDispatch()
 	
 	useEffect(() => {
-		dispatch({ type: "UNSET_TOKEN"})
+		dispatch("UNSET_TOKEN")
 	}, [])
 
 	return (

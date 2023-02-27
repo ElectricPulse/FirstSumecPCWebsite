@@ -1,13 +1,14 @@
 {
-	"eruda": true,
+	"eruda": false,
 	"subjects": ["Mat", "Mam", "Geo", "Bio", "Fyz", "Chem"],
 	"jwt": {
 		"access": "90ba1b2ee184436b52d2f21e111e1595b484da0172cccb0e9c730da7f0553cafd8229e2bc064ff38bd08a8ca2b381b86acf8a177a6d784086f940f0905e50d68",
 		"refresh": "dbebfa4d0e1b21df5821cdc92362272248b66214207639321eb0e40f85dd1d4a8a8f5121fe04f793e3a95138434167188937cb1ea5f2e069857e016aec2a2583"
 	},
 	"database": {
-		"host": "localhost",
-	       	"user": "root",
+		"host": "127.0.0.1",
+	    "user": "root",
+		"port": 3306,
 		"password": "",	
 		"database": "webserver",
 		"multipleStatements": true
@@ -22,7 +23,7 @@
 	},
 	
 	"server": {
-		"local": false,
+		"local": true,
 		"localhost": {
 			"ip": "localhost",
 			"port": 3000

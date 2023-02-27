@@ -143,10 +143,9 @@ app.post('/api/addnote', auth, (req, res) => {
 
 app.get('/api/listnotes', (req, res) => {
 	db.listNotes((error, data) => {
-		if(error) {
-			res.statusCode = 500
-			res.send()
-		}
+		if(error) 
+			return res.sendStatus(500)
+		
 		res.statusCode = 201
 		res.json(data)
 	})

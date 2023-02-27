@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useSelector } from '/store'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import { createPortal } from 'react-dom'
 import Content from '/components/Content'
 import NoteList from '/components/NoteList'
@@ -13,10 +13,9 @@ const main = () => {
 	const [ visible, setVisible ] = useState(false)
 	const notificationRef = useRef()
 	const navigate = useNavigate()
-	const token = useSelector((state) => state.token);
-
+	const token = useSelector(s => s.token)
 	function clickHandler() {
-		if(token == undefined)
+		if(token == "")
 			navigate('/login')
 		else
 			setVisible(true)
