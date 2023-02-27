@@ -22,7 +22,7 @@
 	},
 	
 	"server": {
-		"local": true,
+		"local": false,
 		"localhost": {
 			"ip": "localhost",
 			"port": 3000

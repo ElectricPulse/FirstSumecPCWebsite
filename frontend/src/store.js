@@ -1,24 +1,52 @@
-import { createStore } from 'redux'
+import { configureStore, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-function reducer(state, action) {
-	switch(action.type) {
-		case "SET_TOKEN":
-			const token='Bearer ' + action.value
-			localStorage.setItem('token', action.value)
-			return { ...state, token}
-		case "UNSET_TOKEN":
-			localStorage.clear("token")
-			return { ...state, token: "" }
-
-		case "SET_USER":
-			return { ...state, user: action.value}
-	}
-
-	return { token: "", user: {email: ""} }
+const initialState = {
+	token: '',
+	user: {},
 }
 
-const store = createStore(reducer)
+const fetchUser = createAsyncThunk('auth/fetchRandomUser', async () => {
+	const xhr = new XMLHttpRequest()
+	xhr.open('GET', '/api/user', true)
+	xhr.setRequestHeader('Authorization', store.token)
+	
+	const data = {}
+	await new Promise((resolve, reject) => {
+		xhr.onreadystatechange = function() {
+			if(this.readyState === 4 && this.status == 200) {
+				data = JSON.parse(this.responseText)
+			}
+		}
+	})
+		
+	xhr.send()
+	return data
+})
 
-export default store
+const userSlice = createSlice({
+	name: 'user',
+	initialState,
+	reducers: {
+		setToken(state, action) {
+			state.token='Bearer ' + action.value
+			localStorage.setItem('token', action.value)
+		}
 
+		unsetToken(state, action) {
+			localStorage.clear("token")
+			state.token = ''
+			state.user = {} 
+		}
+	}
 
+	extraReducers: {
+		[fetchUser.fulfilled]: (state, action) => {
+			state.user = action.payload
+		}		
+	}
+})
+
+export const actions = counterSlice.actions
+const store = configureStore({
+	reducer: userSlice.reducer
+})
