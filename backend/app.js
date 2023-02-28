@@ -95,6 +95,29 @@ app.get('/api/authMail/:token', (req, res) => {
 	})
 })
 
+app.get('/api/resetPassMail', auth, (req, res) => {
+	const token = crypto.randomBytes(8).toString('hex')	
+	const transporter = nodemailer.createTransport({
+			service: 'gmail',
+			auth: {
+				user: settings.nodemailer.email,
+				pass: settings.nodemailer.password
+			}
+		})
+		const mail = {
+			from: 'hackermansmurf1@gmail.com',
+			to: email,
+			subject: 'Overenie mailu, FirstSumecPC',
+			text: `
+			Ahoj, "${username}"
+			Aby si dokončil registráciu klikni na tento link:
+			http://${currentSettings.ip}:${currentSettings.port}/authMail/${token}
+			`
+		}	
+
+	transporter.sendMail(mail, (error, info) => {
+})
+
 app.post('/api/register', (req,res) => {
 	const { username, password, email } = req.body
 	if(username == undefined || password == undefined)
