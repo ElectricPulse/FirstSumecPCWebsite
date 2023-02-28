@@ -77,17 +77,15 @@ export function useDispatch() {
 }
 
 export function useSelector(selector) {
-	const data = useRef(selector(state))
 	const [change, setChange] = useState(false)
 
 	useEffect(() => {
 			return subscribe(oldState => {
-				if(!compareDeep(selector(oldState), selector(state))) {
-					setChange((prev) => !prev)
-			}
+				if(!compareDeep(selector(oldState), selector(state))) 
+					setChange((prev) => !prev);
 		})
 	}, [])
 
-	return data.current
+	return selector(state)
 }
 

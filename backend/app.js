@@ -56,15 +56,11 @@ function addnote (req, res) {
 				return sendResponseCreated(res, true)
 		}
 		
-		db.getUser(req.email, (error, user) => {
-			if(error)
-				return sendResponseCreated(res, true)
 
-			fields.author = user.username;
+			fields.author = req.email;
 			db.copyImages(files, fields)
 		
 			sendResponseCreated(res, db.insertNote(fields))
-		})
 	})
 }
 

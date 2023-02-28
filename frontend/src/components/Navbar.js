@@ -5,7 +5,6 @@ import { useSelector } from '/store.js'
 
 function Dropdown() {
 	const state = useSelector(s => s)
-	console.log("reupdated navbar", state.user)
 	return (
 		<div className={styles.accountDropdown}>
 			{!state.token && <>
