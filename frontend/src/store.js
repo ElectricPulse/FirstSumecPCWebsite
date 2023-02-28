@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react'
+import copyDeep from '/utils/copyDeep'
+import compareDeep from '/utils/compareDeep'
 
 /////////
 //Utils//
 /////////
+
 function fetchUser(token) {
 	const xhr = new XMLHttpRequest()
 	xhr.open('GET', '/api/user', true)
@@ -21,9 +24,10 @@ function fetchUser(token) {
 		xhr.send()
 	})
 }
+
 ////////
 
-let state
+let state, stateOld
 let subscribers
 
 export function createStore() {
@@ -44,47 +48,43 @@ function subscribe(callback) {
 }
 
 
-function notify(newState) {
+function notify(oldState) {
 	for(const callback of subscribers) {	
-		callback(newState)
+		callback(oldState)
 	}
 }
 
 function dispatch(action, payload) {
+	stateOld = copyDeep(state)
 	switch(action) {
 		case "SET_TOKEN":
 			localStorage.setItem('token', payload)
 			const token = 'Bearer ' + payload
 			state.token = token
-			fetchUser(token).then((user) => { state.user = user; notify(state) })
+			fetchUser(token).then((user) => { state.user = user; notify(stateOld) })
 			break
 		case "UNSET_TOKEN":
 			state.token = ""
 			state.user = {}
 			localStorage.removeItem('token')
+			notify(stateOld)
 			break
 		}
-	notify(state)
 }
 
 export function useDispatch() {
 	return dispatch
 }
 
-function copy(object) {
-	return JSON.parse(JSON.stringify(object))
-}
-
 export function useSelector(selector) {
-	const data = useRef(selector(copy(state)))
+	const data = useRef(selector(state))
 	const [change, setChange] = useState(false)
 
 	useEffect(() => {
-			return subscribe(newState => {
-				if(JSON.stringify(data.current) !== JSON.stringify(selector(newState)))
+			return subscribe(oldState => {
+				if(!compareDeep(selector(oldState), selector(state))) {
 					setChange((prev) => !prev)
-
-				data.current = selector(copy(newState))
+			}
 		})
 	}, [])
 
