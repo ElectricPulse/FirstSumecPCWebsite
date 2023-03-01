@@ -1,0 +1,14 @@
+.main {
+	display: flex;
+	gap: 5vw;
+	flex-direction: column;
+}
+
+.userDetails {
+	background-color: var(--color_primary);
+	padding: 2rem;	
+}
+
+.main > li {
+	list-style: none;
+}

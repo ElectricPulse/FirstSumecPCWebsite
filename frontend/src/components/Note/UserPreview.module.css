@@ -16,6 +16,11 @@
 	width: 60%;
 }
 
+.buttonContainer {
+	display: flex;
+	gap: 1rem;
+}
+
 .noteContainer {
 	display: flex;
 	flex-direction: column;

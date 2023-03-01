@@ -1,17 +1,13 @@
 .header {
 	display: flex;
 	justify-content: space-between;	
-	padding: 0.5vw 1.5vw;
 	align-self: stretch;
 	padding: 1vw 2vw;
 	background: linear-gradient(135deg, var(--color_primary) 70%, var(--color_secondary) 100%);
 	position: sticky;
-	display: flex;
-	justify-content: space-between;
 	top: 0;
 	left: 0;
 	right: 0;
-	padding: 0.5vw 2vw;
 	align-items: center;
 	z-index: 2;
 }
@@ -28,18 +24,24 @@
 	border-radius: 10px;
 	padding: 0.4rem 0.5rem;
 	background-color: var(--color_contrast);
-
 }
 
 .navigationRight {
-	gap: 2rem;
+	gap: 2vw;
 	display: flex;
 	align-items: center;
 }
 
 .accountContainer{
-
 	position: relative;
+}
+
+.accountContainer a {
+	font-size: 1.3rem;
+}
+
+.ruler {
+	width: 80%;
 }
 
 .account > img {
@@ -51,7 +53,7 @@
 }
 .accountDropdownContainer {
 	top: calc(2.6rem + 2vw);
-	right: 40%;
+	right: 30%;
 	position: absolute;
 	display: none;
 	flex-direction: column;
@@ -64,7 +66,9 @@
 	display: flex;
 	gap: 0.4rem;
 	flex-direction: column;
-	padding: 0.5rem 1rem;
+	padding: 1rem 1.5rem;
+	font-size: 1.2rem;
+	box-shadow: 5px 5px 15px black;
 }
 
 .accountDropdown > a:hover {
@@ -72,7 +76,7 @@
 }
 
 .triangle {
-	height: 0.5rem;
+	height: 0.9rem;
 	margin-right: 0.2rem;
 	display: flex;
 	font-size: 0;

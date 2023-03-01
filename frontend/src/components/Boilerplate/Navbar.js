@@ -12,13 +12,15 @@ function Dropdown() {
 			{!state.token && <>
 				<Link to="/register">Registrovať</Link>
 				<Link to="/login">Prihlásiť</Link>
-			</>}
+			</>
+			}
 			{state.token && <>
 				Welcome aboard captain:
 				<div>
 					<h4>{state.user.username}</h4>
 					<h5>{state.user.email}</h5>
 				</div>
+				<hr className={styles.ruler}/>
 				<Link to="/account">Konto</Link>
 				<Link to="/unlogin">Odhlásiť</Link>
 			</>}

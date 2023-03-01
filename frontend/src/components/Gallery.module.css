@@ -2,46 +2,43 @@
 	position: fixed;
 	background: none;
 	inset: 0;
-
+	z-index: 5;
 }
 
 .overlay {
 	position: absolute;
 	inset: 0;
 	background-color: rgba(0,0,0,0.8);
-	z-index: 3;
 }
 
 
 .dialog {
-	position: absolute;
+	position: fixed;
 	top: 50%;
-	left: 0;
-	right: 0;
+	left: 2%;
+	right: 2%;
 	transform: translateY(-50%);
 	display: flex;
 	background: none;
 	align-items: center;
-	z-index: 3;
 }
 
 .center {
 	color: white;
 	display: flex;
 	
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	flex-shrink: 1;
-
+	align-items: stretch;
+	align-content: center;
+	z-index: 1;
 }
 
+.arrowContainer {
+	position: relative;
+}
+
+.rightImage,
 .leftImage {
-	transform: translateX(100%);
-}
-
-.rightImage {
-	transform: translateX(-100%);
+	filter: brightness(0.5);
 }
 
 .leftImage,
@@ -51,14 +48,23 @@
 }
 
 .centerImage {
-	z-index: 5;
-	max-height: 90vh;
+	width: 60vw;
+	max-width: 90vh;
 }
 
 .leftArrow {
-	transform: rotate(180deg);
+	transform: translate(-100%, -50%) rotate(-180deg);
 }
 
 .rightArrow {
+	transform: translateY(-50%);
+}
+
+.leftArrow,
+.rightArrow {
+	width: 10vw;
+	position: absolute;
+	top: 50%;
+
 }
 

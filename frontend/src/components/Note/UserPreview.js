@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './UserPreview.module.css'
 
+import Button from '/components/Button'
+
 import getTimeDifference from '/utils/getTimeDifference'
 
 const Note = (props) => {
@@ -34,9 +36,9 @@ const Note = (props) => {
 			<hr className={styles.horizontalRuler}/>
 			<div className={styles.buttonContainer}>
 				<Link className={styles.images} to={"/note/" + note.id}>
-					<button className={styles.button}>Viac</button>
+					<Button className={styles.button}>Viac</Button>
 				</Link>
-				<button onClick={props.onDelete} className={styles.deleteButton}>Delete</button>
+				<Button onClick={props.onDelete} className={styles.deleteButton}>Delete</Button>
 			</div>
 		</div>
 		</li>

@@ -48,7 +48,7 @@ const main = ({note}) => {
 		<Gallery 
 			onExit={() => setImageVis(false)} 
 			open={imageVis} 
-			index={imageIndex}
+			index={imageIndex.current}
 			images={note.images} 
 			onLeft={() => --imageIndex.current} 
 			onRight={() => ++imageIndex.current}

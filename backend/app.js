@@ -108,7 +108,7 @@ app.post('/api/login', (req, res) => {
 		if(error || !exists)
 			return sendResponse(res, true)
 		
-		const accessToken = jwt.sign({ email }, settings.jwt.access, {expiresIn: '5d'})
+		const accessToken = jwt.sign({ email }, settings.jwt.access, {expiresIn: '24h'})
 		res.json({accessToken})
 	})
 })
@@ -260,7 +260,7 @@ app.get('*', (req, res) => {
 })	
 
 
-const ip = currentSettings.ip
+const ip = "localhost"
 const port = currentSettings.port + 1
 
 app.listen(port, ip, () => {

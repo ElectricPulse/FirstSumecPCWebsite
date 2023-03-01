@@ -1,5 +1,5 @@
 html {
-	font-size: calc(12.5px + 0.6vw);
+	font-size: calc(13px + 0.8vw);
 }
 
 :root {
@@ -39,8 +39,8 @@ body {
 button {
 	background: none;
 	border: none;
-
 }
+
 dialog {
 	margin: 0;
 	padding: 0;

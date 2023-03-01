@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import NoteUserPreview from '/components/Note/UserPreview'
+import styles from './User.module.css'
 import { useSelector } from '/store.js'
 
 function main() {
@@ -28,6 +29,8 @@ function main() {
 	}
 
 	useEffect(() => {
+		if(store.token.trim() === '')
+			return 
 		const xhr = new XMLHttpRequest()
 		xhr.open('GET', '/api/listUserNotes', true)
 		xhr.setRequestHeader('Authorization', store.token)
@@ -38,14 +41,20 @@ function main() {
 			}
 		}
 		xhr.send()
-	}, [])
+	}, [store.token])
 	
 	return (
-		<div>	
-			{store.user.email}
-			{store.user.username}
+		<section className={styles.main}>
+			<div className={styles.userDetails}>
+				<div>
+				Username: {store.user.username}
+				</div>
+				<div>
+				Your Email: {store.user.email}
+				</div>
+			</div>
 			{notes && notes.map((note) => <NoteUserPreview onDelete={() => deleteHandler(note.id)} key={note.id} note={note}/>)}
-		</div>
+		</section>
 	)
 }
 

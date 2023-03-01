@@ -61,7 +61,7 @@ function dispatch(action, payload) {
 			localStorage.setItem('token', payload)
 			const token = 'Bearer ' + payload
 			state.token = token
-			fetchUser(token).then((user) => { state.user = user; notify(stateOld) })
+			fetchUser(token).then((user) => { state.user = user; notify(stateOld)})
 			break
 		case "UNSET_TOKEN":
 			state.token = ""

@@ -87,7 +87,6 @@ function getUserNotes(email, callback) {
 	`
 
 	connection.query(command, [email], (error, data) => {
-		debugger
 for(let i = 0; i < data.length; ++i) {
 			const key = 'JSON_ARRAYAGG(notes_images.filename)'
 			const note = data[i]
@@ -169,7 +168,6 @@ function authMail(token, callback) {
 	`
 
 	connection.query(command, [token, token], (error, results) => {
-		debugger
 		callback(error || results.affectedRows === 0)
 	})
 }

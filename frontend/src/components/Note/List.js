@@ -16,23 +16,17 @@ function fetchNotes(setNotes) {
 
 function main() {
 	const [notes, setNotes] = useState([])
-	const [query, setQuery] = useState({})
-	const filtered = useRef([])
-
-	function changeHandler(event) {
-		const element = event.target
-		
-		setQuery((query) => ({ ...query, [element.id]: element.value.trim().toLowerCase() }))
-	}
+	const query = useRef({})
+	const [filtered, setFiltered] = useState([])
 
 	function filterNote(note) {
 		//The query system is dynamic based on the id of the <input/> so we need to iterate
-		for(let [key, value] of Object.entries(query)) {
+		for(let [key, value] of Object.entries(query.current)) {
 			if(!value)
 				continue
 
 			if(key == 'author' || key == 'name')
-				if(note[key].toLowerCase().includes(value))
+				if(!note[key].toLowerCase().includes(value))
 					return false
 
 
@@ -42,18 +36,30 @@ function main() {
 		}
 	
 		return true
+	}	
+	function filterNotes() {
+		setFiltered(notes.filter(filterNote))
 	}
+	
+
+	function changeHandler(event) {
+		const element = event.target
+		
+		query.current = { ...query, [element.id]: element.value.trim().toLowerCase() }
+		filterNotes()
+	}	
 
 	useEffect(() => {
 		fetchNotes((notes) => {
 			setNotes(notes)
-			filtered.current = notes.filter(filterNote)
 		})
 	}, [])
-	
+
 	useEffect(() => {
-		filtered.current = notes.filter(filterNote)
-	}, [notes, query])
+		filterNotes()
+	}, [notes])
+	
+
 
 	return (
 	<section className={styles.container}>
@@ -72,9 +78,9 @@ function main() {
 			</select>
 		</form>
 		<hr className={styles.horizontalRuler}/>
-		{filtered.current.length == 0 && <div className={styles.notfound}>Nič som nenašiel</div>}
+		{filtered.length == 0 && <div className={styles.notfound}>Nič som nenašiel</div>}
 		<ul className={styles.list}>
-			{filtered.current.map((note) => <NotePreview key={note.id} note={note}/>)}
+			{filtered.map((note) => <NotePreview key={note.id} note={note}/>)}
 		</ul>
 	</section>
 )

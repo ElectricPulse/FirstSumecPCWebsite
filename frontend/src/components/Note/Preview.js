@@ -29,7 +29,7 @@ function  main({note}) {
 				<Link to={"/note/" + note.id}>
 					<ul className={styles.images}>
 					{
-						note.images.map((image) => <Image key={image} name={image}/>)
+						note.images.slice(0,2).map((image) => <Image key={image} name={image}/>)
 					}
 					</ul>
 				</Link>

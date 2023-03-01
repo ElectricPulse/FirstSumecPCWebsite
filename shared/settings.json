@@ -23,14 +23,14 @@
 	},
 	
 	"server": {
-		"local": true,
+		"local": false,
 		"localhost": {
 			"ip": "localhost",
 			"port": 3000
 		},
 		"host": {
 			"ip": "0.0.0.0",
-			"port": 81
+			"port": 80
 		}
 	}
 }
