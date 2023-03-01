@@ -1,0 +1,64 @@
+.dialogContainer {
+	position: fixed;
+	background: none;
+	inset: 0;
+
+}
+
+.overlay {
+	position: absolute;
+	inset: 0;
+	background-color: rgba(0,0,0,0.8);
+	z-index: 3;
+}
+
+
+.dialog {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	transform: translateY(-50%);
+	display: flex;
+	background: none;
+	align-items: center;
+	z-index: 3;
+}
+
+.center {
+	color: white;
+	display: flex;
+	
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	flex-shrink: 1;
+
+}
+
+.leftImage {
+	transform: translateX(100%);
+}
+
+.rightImage {
+	transform: translateX(-100%);
+}
+
+.leftImage,
+.rightImage,
+.centerImage {
+	min-width: 0;
+}
+
+.centerImage {
+	z-index: 5;
+	max-height: 90vh;
+}
+
+.leftArrow {
+	transform: rotate(180deg);
+}
+
+.rightArrow {
+}
+
