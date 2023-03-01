@@ -16,8 +16,6 @@ function main() {
 		xhr.send()
 	}, [])
 
-	console.log(notes)
-
 	return (
 		<div>	
 			{store.user.email}

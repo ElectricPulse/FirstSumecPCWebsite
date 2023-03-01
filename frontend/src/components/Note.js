@@ -3,42 +3,7 @@ import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import styles from './Note.module.css'
 import getTimeDifference from '/utils/getTimeDifference'
-
-
-function Arrow(props) {
-	return (
-		<div className={styles.arrowContainer} onClick={props.onClick}> 
-			<img className={props.left ? styles.leftArrow : styles.rightArrow} src="/api/images/arrow.svg"/>
-		</div>
-	)
-}
-
-function GalleryDialog(props) {
-	const renderLeft = !(props.index - 1 < 0)
-	const renderRight = !(props.index + 1 >= props.images.length)
-	return createPortal(
-		<>
-		{props.open && 
-		<dialog open={props.open} className={styles.dialogContainer}>
-			<div className={styles.overlay} onClick={props.onExit}></div>
-			<div className={styles.dialog} >
-				{renderLeft && <img className={styles.leftImage} onClick={props.onLeft} src={`/api/images/${props.images[props.index-1]}`}/>}
-	
-				<div className={styles.center}>				
-					{renderLeft && <Arrow left onClick={props.onLeft}/>}
-					<img className={styles.centerImage} src={`/api/images/${props.images[props.index]}`}/>
-					{renderRight && <Arrow onClick={props.onRight}/>}
-				</div>
-	
-				{renderRight && <img className={styles.rightImage} onClick={props.onRight} src={`/api/images/${props.images[props.index+1]}`}/>}
-			</div>
-		</dialog>
-		} 
-		</>,
-		document.getElementById('app')
-	)
-}
-
+import Gallery from './Gallery'
 
 const main = (props) => {
 	const [ imageVis, setImageVis ] = useState(false)
@@ -74,7 +39,7 @@ const main = (props) => {
 			</Link>
 		</div>
 		</div>
-		<GalleryDialog onExit={() => setImageVis(false)} 
+		<Gallery onExit={() => setImageVis(false)} 
 			open={imageVis} index={imageIndex} images={note.images} 
 			onLeft={() => setImageIndex(imageIndex-1)} onRight={() => setImageIndex(imageIndex+1)}
 		/>
