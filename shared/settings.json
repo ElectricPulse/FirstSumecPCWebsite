@@ -1,5 +1,5 @@
 {
-	"eruda": true,
+	"eruda": false,
 	"subjects": ["Mat", "Mam", "Geo", "Bio", "Fyz", "Chem"],
 	"jwt": {
 		"access": "90ba1b2ee184436b52d2f21e111e1595b484da0172cccb0e9c730da7f0553cafd8229e2bc064ff38bd08a8ca2b381b86acf8a177a6d784086f940f0905e50d68",

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { useDispatch } from '/store.js'
 import styles from './Account.module.css'
 import Button from './Button'
@@ -33,6 +34,7 @@ function main(props) {
 	return (
 		<section className={styles.container}>
 		<h2>Prihlásenie</h2>
+		<div className={styles.formContainer}>
 		<form className={styles.form}  onSubmit={handleSubmit}>
 			<label htmlFor="email">Email:</label>
 			<input placeholder="simon.dubek@gmail.com" required type="email" id="email" ref={emailRef}/>
@@ -41,6 +43,10 @@ function main(props) {
 			<input required type="password" id="password" ref={passwordRef}/>
 			<Button submit/>
 		</form>
+		<Link to="/resetPasswordMail">
+			Zabudnuté heslo?
+		</Link>
+		</div>
 		</section>
 	)	
 }

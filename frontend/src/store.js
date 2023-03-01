@@ -48,9 +48,9 @@ function subscribe(callback) {
 }
 
 
-function notify(oldState) {
+function notify(stateOld) {
 	for(const callback of subscribers) {	
-		callback(oldState)
+		callback(stateOld)
 	}
 }
 
@@ -80,9 +80,10 @@ export function useSelector(selector) {
 	const [change, setChange] = useState(false)
 
 	useEffect(() => {
-			return subscribe(oldState => {
-				if(!compareDeep(selector(oldState), selector(state))) 
+			return subscribe(stateOld => {
+				if(!compareDeep(selector(stateOld), selector(state)))  {
 					setChange((prev) => !prev);
+				}
 		})
 	}, [])
 

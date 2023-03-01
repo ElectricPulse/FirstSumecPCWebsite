@@ -19,7 +19,6 @@ function login(data, callback) {
 	SELECT * FROM accounts
 	WHERE email=? AND password=?;
 	`
-	debugger
 	connection.query(command, [data.email, data.hashedPassword], (error, results) => {
 		callback(error, results?.length == 1)
 	})
@@ -27,10 +26,10 @@ function login(data, callback) {
 
 function insertNote(payload) {
 	const command = `
-	INSERT INTO notes (name, description, author, date, subject) 
-	SELECT ?, ?, ?, ?, ?;
+	INSERT INTO notes (name, email, description, author, date, subject) 
+	SELECT ?, ?, ?, ?, ?, ?;
 	`
-	connection.query(command,[payload.name, payload.description, payload.author, payload.date, payload.subject], (error, result) => {
+	connection.query(command,[payload.name, payload.email, payload.description, payload.author, payload.date, payload.subject], (error, result) => {
 		for(let i = 0; i < payload.filenames.length; ++i){
 			const filename = payload.filenames[i]
 			const command_filename = `
@@ -66,17 +65,59 @@ function copyImages(files, payload) {
 	return 0
 }
 
+function getUserNotes(email, callback) {
+	const command = `
+	SELECT notes.*, JSON_ARRAYAGG(notes_images.filename)
+     FROM notes
+     INNER JOIN notes_images
+ ON notes.id = notes_images.notes_id
+     WHERE email = ?
+     GROUP BY notes.id
+	`
+
+	connection.query(command, [email], (error, data) => {
+		debugger
+for(let i = 0; i < data.length; ++i) {
+			const key = 'JSON_ARRAYAGG(notes_images.filename)'
+			const note = data[i]
+
+			let inElement = false;
+			let elementIndex = 0;
+			note.images = ['']
+			for(let j = 0; j < note[key].length; ++j){
+				if(note[key][j] === '"') {
+					if(inElement == true) 
+						note.images[++elementIndex] = ''
+
+					inElement = !inElement
+					continue
+				}
+
+				if(inElement)
+					note.images[elementIndex] += note[key][j]
+					
+			}
+			delete note[key]
+			note.images.pop()
+		}
+		
+		data.reverse()
+
+		callback(error, data)
+	})
+}
+
 function getNote(note_id, callback) {
 	const cmd = `
 	SELECT notes.*, JSON_ARRAYAGG(notes_images.filename)
 	FROM notes
 	INNER JOIN notes_images
 	ON notes.id = notes_images.notes_id
-	WHERE id = ${note_id}
+	WHERE id = ?
 	GROUP BY notes.id
 	`
 
-	connection.query(cmd, (error, data) => {
+	connection.query(cmd,[note_id], (error, data) => {
 		if(error || data.length == 0)
 			return callback(true, null)
 
@@ -137,6 +178,21 @@ function preRegister({username, hashedPassword, email, token}, callback) {
 	})
 }
 
+function changePassword(email, password,callback) {
+	console.log(email, password)
+		
+	const command = `
+		UPDATE accounts
+		SET password = ?
+		WHERE email = ?;
+	`
+
+	connection.query(command, [password, email], (error) => {
+
+	callback(error)
+	})
+}
+
 function getUser(email, callback) {
 	const command = `
 	SELECT email, username
@@ -188,6 +244,7 @@ function listNotes(callback) {
 		}
 		
 		data.reverse()
+		debugger
 		callback(false, data)
 	})
 }
@@ -209,4 +266,6 @@ module.exports = {
 	preRegister,
 	login,
 	getUser, 
+	changePassword,
+	getUserNotes,
 }

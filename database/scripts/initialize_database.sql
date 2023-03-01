@@ -20,6 +20,7 @@ CREATE TABLE accounts (
 
 CREATE TABLE notes (
 	name varchar(64) NOT NULL,
+	email varchar(64) NOT NULL,
 	description varchar(4096),
 	author varchar(64) NOT NULL,
 	date varchar(10) NOT NULL,

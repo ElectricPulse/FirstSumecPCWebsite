@@ -1,8 +1,12 @@
+.formContainer {
+	background-color: var(--color_primary);
+}
+
 .form {
 	display: flex;
 	flex-direction: column;
 	max-width: 40ch;
-	background-color: var(--color_primary);
+
 	padding: 3vw 4vw;
 	gap: 0.8rem;
 }

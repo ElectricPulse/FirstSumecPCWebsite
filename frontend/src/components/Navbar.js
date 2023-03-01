@@ -17,6 +17,7 @@ function Dropdown() {
 					<h4>{state.user.username}</h4>
 					<h5>{state.user.email}</h5>
 				</div>
+				<Link to="/account">Konto</Link>
 				<Link to="/unlogin">Odhlásiť</Link>
 			</>}
 		</div>

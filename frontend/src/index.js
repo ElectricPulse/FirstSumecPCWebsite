@@ -5,11 +5,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Index from '/pages/index';
 import About from '/pages/about';
-import Note from '/pages/note';
 import Error from '/pages/error';
+import Note from '/pages/note';
 import Register from '/pages/register';
 import AuthMail from '/pages/authMail';
 import Login from '/pages/login';
+import ResetPasswordMail from '/pages/resetPasswordMail'
+import ResetPassword from '/pages/resetPassword'
+import User from '/pages/user'
 import Unlogin from '/pages/unlogin';
 
 import settings from '@shared/settings.json'
@@ -29,7 +32,7 @@ const App = () => {
 		const token = localStorage.getItem('token')
 		if(token)
 			dispatch("SET_TOKEN", token)
-	})
+	}, [])
 	
 	return (
 	<BrowserRouter>
@@ -39,8 +42,12 @@ const App = () => {
 			<Route path="about" element={<About/>}/>
 			<Route path="register" element={<Register/>}/>
 			<Route path="login" element={<Login/>}/>
+			<Route path="account" element={<User/>}/>
+			<Route path="resetPasswordMail" element={<ResetPasswordMail/>}/>
 			<Route path="note/:id" element={<Note/>}/>
+			<Route path="resetPassword/:token" element={<ResetPassword/>}/>
 			<Route path="authMail/:token" element={<AuthMail/>}/>
+
 			<Route path="unlogin" element={<Unlogin/>}/>
 			<Route path="*" element={<Error/>}/>
 		</Route>

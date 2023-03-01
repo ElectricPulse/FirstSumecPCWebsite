@@ -19,12 +19,14 @@ module.exports = (env) => {
 		}),
 	],
 	output: {
-		path: path.resolve(__dirname, 'out'),
-		filename: 'main.js',
+		path: path.resolve(__dirname, 'src'),
+		filename: 'index.js',
 		publicPath: '/',
 	},
 	devServer: {
-  		historyApiFallback: true,
+  		historyApiFallback: {
+			disableDotRule: true,
+		},
 		port: currentSettings.port,
 		host: currentSettings.IP,
 		proxy: {

@@ -22,6 +22,7 @@ function auth(req, res, next) {
 			return res.sendStatus(403)	
 
 		req.email = data.email
+		req.tokenData = data
 		next()
 	})
 }
@@ -39,11 +40,15 @@ function hashPassword(password) {
 }
 
 function addnote (req, res) {
+	db.getUser(req.email, (error, data) => {
+	if(error)
+		sendResponseCreate(res, true)
 	if(!/.*multipart\/form-data.*/.test(req.headers['content-type']))
 		return sendResponseCreated(res, true)
 			
 	const payload = formidable()
 	payload.parse(req, (err, fields, files) => {
+		debugger
 		if(err) 
 			return sendResponseCreated(res, true)
 
@@ -57,12 +62,25 @@ function addnote (req, res) {
 		}
 		
 
-			fields.author = req.email;
+			fields.author = data.username;
+			fields.email = req.email;
 			db.copyImages(files, fields)
 		
 			sendResponseCreated(res, db.insertNote(fields))
 	})
+	})
 }
+
+app.get('/api/listUserNotes', auth, (req, res) => {
+	debugger
+	db.getUserNotes(req.email, (error, data) => {
+		debugger
+		if(error)
+			sendResponse(req, true)
+		else
+			res.json(data)
+	})
+})
 
 app.post('/api/login', (req, res) => {
 	const { email, password } = req.body
@@ -74,12 +92,13 @@ app.post('/api/login', (req, res) => {
 		if(error || !exists)
 			return sendResponse(res, true)
 		
-		const accessToken = jwt.sign({ email }, settings.jwt.access)
+		const accessToken = jwt.sign({ email }, settings.jwt.access, {expiresIn: '5d'})
 		res.json({accessToken})
 	})
 })
 
 app.get('/api/user', auth, (req, res) => {
+
 	const user = db.getUser(req.email, (error, data) => {
 		if(error)
 			res.sendStatus(404)
@@ -95,9 +114,36 @@ app.get('/api/authMail/:token', (req, res) => {
 	})
 })
 
-app.get('/api/resetPassMail', auth, (req, res) => {
-	const token = crypto.randomBytes(8).toString('hex')	
-	const transporter = nodemailer.createTransport({
+app.post('/api/resetPassword',auth, (req, res) => {
+	if(req.tokenData.action  === "reset_password") {
+
+
+			const hashedPassword = hashPassword(req.body.password)
+		db.changePassword(req.tokenData.email, hashedPassword, (error) => {
+			sendResponse(res, error)
+
+		})
+	}
+})
+
+app.get('/api/userNotes',auth, (req, res) => {
+	const email = req.body.email
+})
+
+app.post('/api/resetPasswordMail', (req, res) => {
+	const email = req.body.email
+	if(email == undefined)
+		return sendReponse(res, true)
+
+
+	const user = db.getUser(email, (error, data) => {
+	debugger
+	if(data == undefined)
+		return sendReponse(res, true)
+
+		const token = jwt.sign({ email: req.body.email, action: "reset_password" }, settings.jwt.access, {expiresIn: "15m"})
+
+		const transporter = nodemailer.createTransport({
 			service: 'gmail',
 			auth: {
 				user: settings.nodemailer.email,
@@ -107,15 +153,19 @@ app.get('/api/resetPassMail', auth, (req, res) => {
 		const mail = {
 			from: 'hackermansmurf1@gmail.com',
 			to: email,
-			subject: 'Overenie mailu, FirstSumecPC',
+			subject: 'Zabudnuté heslo, FirstSumecPC',
 			text: `
-			Ahoj, "${username}"
-			Aby si dokončil registráciu klikni na tento link:
-			http://${currentSettings.ip}:${currentSettings.port}/authMail/${token}
+			Ahoj, "${data.username}"
+			Aby si zmenil heslo klikni na:
+			http://${currentSettings.ip}:${currentSettings.port}/resetPassword/${token}
 			`
 		}	
 
-	transporter.sendMail(mail, (error, info) => {
+		transporter.sendMail(mail, (error, info) => {
+			debugger
+			sendResponse(res, error)
+		})
+	})
 })
 
 app.post('/api/register', (req,res) => {
