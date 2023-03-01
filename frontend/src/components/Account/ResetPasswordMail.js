@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import styles from './Account.module.css'
-import Button from './Button'
+
+import Form from '/components/Form'
 
 function main(props) {
 	const emailRef = useRef()
@@ -10,13 +11,8 @@ function main(props) {
 		//Check for double spaces
 		//trim() on backend
 		const email = emailRef.current.value
-		
-				
-		
-		const xhr = new XMLHttpRequest()
 		xhr.open("POST", "/api/resetPasswordMail", true)
 		xhr.setRequestHeader("Content-Type", "application/json")
-
 
 		xhr.onreadystatechange = function() {
 			if(this.readyState === 4) {
@@ -30,12 +26,11 @@ function main(props) {
 	return (
 		<section className={styles.container}>
 		<h2>Resetovanie hesla</h2>
-		<form className={styles.form} onSubmit={handleSubmit}>
+		<Form className={styles.form} onSubmit={handleSubmit}>
 
 						<label htmlFor="email">Email:</label>
 			<input placeholder="simon.dubek@gmail.com" required type="email" id="email" ref={emailRef}/>
-			<Button submit/>
-		</form>
+		</Form>
 		</section>
 	)	
 }

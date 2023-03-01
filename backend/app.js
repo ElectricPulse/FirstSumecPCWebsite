@@ -71,6 +71,22 @@ function addnote (req, res) {
 	})
 }
 
+app.delete('/api/deleteNote/:id', auth, (req, res) => {
+	db.getNote(req.params.id, (error, data) => {
+		if(error) {
+			return sendResponse(res,true)
+		}
+		
+		if(data.email === req.email)
+			db.deleteNote(req.params.id, (error) => {
+				if(error)
+					return sendResponse(res,true)
+			
+				res.sendStatus(204)
+			})
+	})
+})
+
 app.get('/api/listUserNotes', auth, (req, res) => {
 	debugger
 	db.getUserNotes(req.email, (error, data) => {

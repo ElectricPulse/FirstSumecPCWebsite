@@ -2,9 +2,8 @@ import React, { useRef, useState, useEffect, forwardRef, useImperativeHandle } f
 import { createPortal } from 'react-dom'
 import styles from './Notification.module.css'
 
-
 const main = forwardRef((props, ref) => {
-        const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(false);
 	const [open, setOpen] = useState(false);
 	const [content, setContent] = useState('')
 	const [error, setError] = useState()

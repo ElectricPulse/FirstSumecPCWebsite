@@ -69,7 +69,14 @@ function dispatch(action, payload) {
 			localStorage.removeItem('token')
 			notify(stateOld)
 			break
-		}
+		case "SET_NOTIFY_CALLBACK":
+			state.notifyCallback = payload
+			break
+	}
+}
+
+export function useNotify() {
+	return ((...args) => {state.notifyCallback(...args)})
 }
 
 export function useDispatch() {

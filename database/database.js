@@ -65,6 +65,17 @@ function copyImages(files, payload) {
 	return 0
 }
 
+function deleteNote(id, callback) {
+	const command = `
+	DELETE from notes
+	WHERE id = ?
+	`
+
+	connection.query(command, [id], (error) => {
+		callback(error)
+	})
+}
+
 function getUserNotes(email, callback) {
 	const command = `
 	SELECT notes.*, JSON_ARRAYAGG(notes_images.filename)
@@ -268,4 +279,5 @@ module.exports = {
 	getUser, 
 	changePassword,
 	getUserNotes,
+	deleteNote,
 }

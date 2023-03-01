@@ -1,17 +1,15 @@
-import React, { useRef } from 'react'
-
-import Content from '/components/Content'
-import Notification from '/components/Notification'
-import ResetPasswordMail from '/components/ResetPasswordMail'
+import React from 'react'
+import { useNotify } from '/store.js'
+import Content from '/components/Boilerplate/Content'
+import ResetPasswordMail from '/components/Account/ResetPasswordMail'
 import styles from './resetPasswordMail.module.css'
 import './common.css'
 
 const main = () => {
-	const notificationRef = useRef()
+	const notify = useNotify()
 	return (
 		<Content name={styles.index}>
-			<ResetPasswordMail onCompletion={(error) => notificationRef.current.notify(error ? "Something went wrong, couldnt send mail": "Sucessfully sent mail", error)}/>
-			<Notification ref={notificationRef}/>
+			<ResetPasswordMail onCompletion={(error) => notify(error ? "Something went wrong, couldnt send mail": "Sucessfully sent mail", error)}/>
 		</Content>
 	)	
 }

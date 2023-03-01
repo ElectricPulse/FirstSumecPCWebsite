@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import styles from './Navbar.module.css'
 import { useSelector } from '/store.js'
 
+import Image from '/components/Image'
+
 function Dropdown() {
 	const state = useSelector(s => s)
 	return (
@@ -34,21 +36,21 @@ function main(){
 			<nav className={styles.navigationRight}>
 				<div className={styles.accountContainer}>
 				<button className={styles.account}>
-					<img src="/api/images/accountIcon.svg"/>
+					<Image name="accountIcon.svg"/>
 				</button>
 
 				<div className={styles.accountDropdownContainer}>
-					<img className={styles.triangle} src="/api/images/triangle.svg"/>		
+					<Image className={styles.triangle} name="triangle.svg"/>		
 					<Dropdown/>					
 				</div>
 				</div>
 				<Link to="/" className={styles.logo}>
-					<img src="/api/images/sumec.png"/>
+					<Image name="sumec.png"/>
 				</Link>
 
 
 				</nav>
-				</header>
+		</header>
 	)
 }
 

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import styles from './Account.module.css'
-import Button from './Button'
+
+import Button from '/components/Form'
 
 function main(props) {
 	const passwordRef = useRef()
@@ -11,9 +12,6 @@ function main(props) {
 		//Check for double spaces
 		//trim() on backend
 		const password = passwordRef.current.value
-		
-				
-		
 		const xhr = new XMLHttpRequest()
 		xhr.open("POST", "/api/resetPassword", true)
 		xhr.setRequestHeader("Content-Type", "application/json")
@@ -32,14 +30,13 @@ function main(props) {
 	return (
 		<section className={styles.container}>
 		<h2>Resetovanie hesla</h2>
-		<form className={styles.form} onSubmit={handleSubmit}>
+		<Form className={styles.form} onSubmit={handleSubmit}>
 
 						<label htmlFor="heslo1">Nove Heslo:</label>
 			<input required type="password" id="heslo1" ref={passwordRef}/>
 						<label htmlFor="heslo2">Nove Heslo Znovu:</label>
 					<input required type="password" id="heslo2" ref={passwordAgainRef}/>
-			<Button submit/>
-		</form>
+		</Form>
 		</section>
 	)	
 }

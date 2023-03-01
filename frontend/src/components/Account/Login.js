@@ -2,7 +2,8 @@ import React, { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from '/store.js'
 import styles from './Account.module.css'
-import Button from './Button'
+
+import Form from '/components/Form'
 
 function main(props) {
 	const passwordRef = useRef()
@@ -35,14 +36,13 @@ function main(props) {
 		<section className={styles.container}>
 		<h2>Prihlásenie</h2>
 		<div className={styles.formContainer}>
-		<form className={styles.form}  onSubmit={handleSubmit}>
+		<Form className={styles.form} onSubmit={handleSubmit}>
 			<label htmlFor="email">Email:</label>
 			<input placeholder="simon.dubek@gmail.com" required type="email" id="email" ref={emailRef}/>
 
 			<label htmlFor="password">Heslo:</label>
 			<input required type="password" id="password" ref={passwordRef}/>
-			<Button submit/>
-		</form>
+		</Form>
 		<Link to="/resetPasswordMail">
 			Zabudnuté heslo?
 		</Link>

@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { createStore, useDispatch } from '/store.js'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -24,15 +24,13 @@ if(settings.eruda)
 //Initialize custom state managment system
 createStore()
 
-const App = () => {
-	const [token, setToken] = useState("")
-	const dispatch = useDispatch()
+const token = localStorage.getItem('token')
+const dispatch = useDispatch()
+if(token)
+	dispatch("SET_TOKEN", token)
 
-	useEffect(() => {
-		const token = localStorage.getItem('token')
-		if(token)
-			dispatch("SET_TOKEN", token)
-	}, [])
+const App = () => {
+	const dispatch = useDispatch()
 	
 	return (
 	<BrowserRouter>

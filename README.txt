@@ -17,3 +17,6 @@ Todo:
 	6. Convert all fetches to XHR
 	7. Add .this to all XHR requests
  
+Notes:
+	Currently querying is done on the frontend
+	I decided to use XHR requests for learning purposes

@@ -1,5 +1,5 @@
 import React from 'react'
-import Content from '/components/Content'
+import Content from '/components/Boilerplate/Content'
 import styles from './about.module.css'
 import './common.css'
 

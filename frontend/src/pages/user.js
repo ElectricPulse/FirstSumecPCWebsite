@@ -1,6 +1,6 @@
 import React from 'react'
-import Content from '/components/Content'
-import User from '/components/User'
+import Content from '/components/Boilerplate/Content'
+import User from '/components/Account/User'
 import styles from './user.module.css'
 import './common.css'
 

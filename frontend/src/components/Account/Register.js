@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import styles from './Account.module.css'
-import Button from './Button'
+
+import Button from '/components/Button'
 
 function main(props) {
 	const formRef = useRef()

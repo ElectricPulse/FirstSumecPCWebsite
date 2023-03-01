@@ -1,13 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import styles from './NotePreview.module.css'
-function getTime(date)  {
-	const current = new Date()
-	const noteDate = new Date(date)
-	const diffTime = current - noteDate
-	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-	return diffDays
-}
+import styles from './UserPreview.module.css'
+
+import getTimeDifference from '/utils/getTimeDifference'
+
 const Note = (props) => {
 	const note = props.note
 	return (
@@ -23,7 +19,7 @@ const Note = (props) => {
 					Autor: {note.author}
 				</div>
 				<div>
-					Dátum hodiny: pred {getTime(note.date)} dňami
+					Dátum hodiny: pred {getTimeDifference(note.date)} dňami
 				</div>
 				<div>
 					Popis: {note.description}
@@ -40,6 +36,7 @@ const Note = (props) => {
 				<Link className={styles.images} to={"/note/" + note.id}>
 					<button className={styles.button}>Viac</button>
 				</Link>
+				<button onClick={props.onDelete} className={styles.deleteButton}>Delete</button>
 			</div>
 		</div>
 		</li>

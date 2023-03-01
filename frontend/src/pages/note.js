@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import Content from '/components/Content'
-import Note from '/components/Note'
+import Content from '/components/Boilerplate/Content'
+import NoteDetails from '/components/Note/Details'
 
 import './common.css'
 
@@ -17,7 +17,7 @@ const main = () => {
 
 	return (
 		<Content name="index">
-			{note && <Note note={note}/>}
+			{note && <NoteDetails note={note}/>}
 		</Content>
 	)	
 }

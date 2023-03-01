@@ -4,4 +4,5 @@
 	align-items: center;
 	margin-block: 5vw;
 	margin-inline: auto;
+			min-height: 100vh;
 }

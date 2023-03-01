@@ -18,6 +18,10 @@
 	font-size: 1rem;
 }
 
+.image > img {
+	width: 100px;
+}
+
 .title h3:last-of-type {
 	border-radius: 5px;
 	background-color: var(--color_primary);

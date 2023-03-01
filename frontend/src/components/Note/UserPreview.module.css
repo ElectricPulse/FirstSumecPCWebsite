@@ -1,0 +1,69 @@
+@media only screen and (max-width: 600px) {
+	.note {
+		flex-direction: column;
+	}
+
+	.container {
+		width: 100%;
+	}
+}
+
+.deleteButton {
+	background-color: red;
+}
+
+.horizontalRuler {
+	width: 60%;
+}
+
+.noteContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 1vw;
+	background-color: white;
+	align-items: center;
+	padding: 2vw 2vw;
+}
+
+.button {
+	padding: 0.5rem 1rem;
+	background-color: var(--color_contrast);
+	color: white;	
+	border: none;
+	border-radius: 5px;
+}	
+
+.note {
+
+	color: black;
+	display: flex;
+	justify-content: space-between;
+
+}
+
+.title {
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--color_contrast);
+	padding: 0.5rem 1.5rem;
+	align-items: center;
+}
+
+.container h3:first-of-type {
+	font-size: 1rem;
+}
+
+.title h3:last-of-type {
+	border-radius: 5px;
+	background-color: var(--color_primary);
+	padding: 0.5rem;
+	display:  block;
+}
+
+.images {
+	
+}	
+
+.images > img {
+	max-width: 5rem;
+}
