@@ -32,7 +32,7 @@ let subscribers
 
 export function createStore() {
 	state = {
-		token: ' ',
+		token: '',
 		user: {}
 	}
 	subscribers = []

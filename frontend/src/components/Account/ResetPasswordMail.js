@@ -11,11 +11,12 @@ function main(props) {
 		//Check for double spaces
 		//trim() on backend
 		const email = emailRef.current.value
+		const xhr = new XMLHttpRequest()
 		xhr.open("POST", "/api/resetPasswordMail", true)
 		xhr.setRequestHeader("Content-Type", "application/json")
 
 		xhr.onreadystatechange = function() {
-			if(this.readyState === 4) {
+			if(this.readyState === 4) { 
 				props.onCompletion(this.status != 200)
 			}
 		}

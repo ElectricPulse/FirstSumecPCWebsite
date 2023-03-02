@@ -65,6 +65,7 @@ function main(props) {
 	return (
 		<section className={styles.container}>
 		<h2>Registrácia</h2>
+		<div className={styles.formContainer}>
 		<form className={styles.form} ref={formRef} onSubmit={handleSubmit}>
 			<fieldset>
 				<div>
@@ -87,6 +88,7 @@ function main(props) {
 			<input onChange={changeHandler}  required type="password" onChange={passwordChangeHandler} id="passwordAuth" ref={passwordAuthRef}/>
 			<Button disabled={disabled} submit/>
 		</form>
+		</div>
 		</section>
 	)	
 }

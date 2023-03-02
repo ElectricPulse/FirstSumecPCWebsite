@@ -1,10 +1,14 @@
 const app = require('./server')
+const jwt = require('jsonwebtoken')
 const path = require('path')
 const auth = require('./auth')
 const hashPassword = require('./hashPassword')
 const formidable = require('formidable')
 const db = require('../database/database.js')
+const crypto = require('crypto')
 const sendMail = require('./sendMail')
+const settings = require('../shared/settings.json')
+const currentSettings = settings.server.local ? settings.server.localhost : settings.server.host
 
 app.delete('/api/deleteNote/:id', auth, async (req, res) => {
 	try {	
@@ -55,18 +59,19 @@ app.get('/api/user', auth, async (req, res) => {
 app.get('/api/authMail/:token',async (req, res) => {
 	try {
 		await db.authMail(req.params.token)
-		res.sendStatus(211)
+		debugger
+		res.sendStatus(201)
 	} catch(error) {
 		res.sendStatus(400)
 	}
 })
 
-app.post('/api/resetPassword',auth, async (req, res) => {
+app.post('/api/resetPassword', auth, async (req, res) => {
+	debugger
 	try {
 		if(req.tokenData.action  !== "reset_password") 
 			throw new Error()
 	
-
 		const hashedPassword = hashPassword(req.body.password)
 		await db.changePassword(req.tokenData.email, hashedPassword)
 		res.sendStatus(200)
@@ -83,20 +88,20 @@ app.post('/api/resetPasswordMail', async (req, res) => {
 
 
 		const user = await db.getUser(email)
-		if(data == undefined)
-			return sendReponse(res, true)
 
-			const token = jwt.sign({ email: req.body.email, action: "reset_password" }, settings.jwt.access, {expiresIn: "15m"})
+		const token = jwt.sign({ email: req.body.email, action: "reset_password" }, settings.jwt.access, {expiresIn: "15m"})
 
-			await sendMail(mail, {
-				subject: 'Zabudnuté heslo, FirstSumecPC',
-				text: `
-				Ahoj, "${data.username}"
-				Aby si zmenil heslo klikni na:
-				http://${currentSettings.ip}:${currentSettings.port}/resetPassword/${token}
-				`
-			})
+		await sendMail(email, {
+			subject: 'Zabudnuté heslo, FirstSumecPC',
+			text: `
+			Ahoj, "${user.username}"
+			Aby si zmenil heslo klikni na:
+			http://${currentSettings.ip}:${currentSettings.port}/resetPassword/${token}
+			`
+		})
+		res.sendStatus(200)
 	} catch(error) {
+		debugger
 		res.sendStatus(403)
 	}
 })
@@ -109,7 +114,6 @@ app.post('/api/register', async (req,res) => {
 
 		const hashedPassword = hashPassword(password)
 		const token = crypto.randomBytes(8).toString('hex')	
-		debugger
 		await db.preRegister({username, hashedPassword, email, token})
 		await sendMail(email, {
 			subject: 'Overenie mailu, FirstSumecPC',
@@ -119,8 +123,8 @@ app.post('/api/register', async (req,res) => {
 			http://${currentSettings.ip}:${currentSettings.port}/authMail/${token}
 			`
 		})
-
-		} catch(error) {
+		res.sendStatus(201)
+	} catch(error) {
 		res.sendStatus(500)
 	}	
 })

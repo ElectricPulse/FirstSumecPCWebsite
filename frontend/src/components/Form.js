@@ -24,7 +24,7 @@ function main({children, className, ...props}) {
 	useEffect(() => {
 		const elements = formRef.current.querySelectorAll('input[required]')
 		for(const element of elements) {
-			element.addEventListener('change', changeHandler)
+			element.addEventListener('input', changeHandler)
 			inputs.current.push(element)
 		}
 	}, [children])

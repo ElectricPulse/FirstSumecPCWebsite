@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import styles from './Account.module.css'
 
-import Button from '/components/Form'
+import Form from '/components/Form'
 
 function main(props) {
 	const passwordRef = useRef()

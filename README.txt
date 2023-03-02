@@ -22,3 +22,9 @@ Features to be added:
 	Editing of notes
 	Reviewing/Comments of notes
 	Profile pictures
+
+To run:
+	download mentioned dependencies
+	fill in neccessary passwords, jwt salt etc in share/settings-skeleton.json and move to share/settings.json
+	run make install
+	then run make start

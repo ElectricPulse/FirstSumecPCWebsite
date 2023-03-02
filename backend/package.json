@@ -1,5 +1,10 @@
 {
+  "scripts": {
+    "start": "nodemon app.js",
+    "debug": "nodemon -- --inspect-port=0.0.0.0:9229 --inspect routes.js"
+  },
   "dependencies": {
+    "crypto": "^1.0.1",
     "express": "^4.18.2",
     "formidable": "^2.1.1",
     "jsonwebtoken": "^9.0.0",
