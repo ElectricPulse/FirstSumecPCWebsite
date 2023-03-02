@@ -1,0 +1,36 @@
+{
+	"eruda": false,
+	"subjects": ["Mat", "Mam", "Geo", "Bio", "Fyz", "Chem"],
+	"jwt": {
+		"access": <random_string>,
+		"refresh": <random_string>
+	},
+	"database": {
+		"host": "127.0.0.1",
+	    "user": "root",
+		"port": 3306,
+		"password": "",	
+		"database": "webserver",
+		"multipleStatements": true
+	},
+	"nodemailer": {
+		"email": <email>,
+		"password": <application_password>
+	},
+	"passHash": {
+		"iterations": 4,
+		"key": <hash-salt>
+	},
+	
+	"server": {
+		"local": false,
+		"localhost": {
+			"ip": "localhost",
+			"port": 3000
+		},
+		"host": {
+			"ip": "0.0.0.0",
+			"port": 80
+		}
+	}
+}

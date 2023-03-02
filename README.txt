@@ -10,21 +10,20 @@ Dependencies:
 
 Todo:
 	1. Add CSS :hover animations
-	2. Sanitise SQL input as to prevent Injection attacks
-	3. Clean up pages (they are fragmented)
-	4. Port to https
+	2. Clean up pages (they are fragmented)
+	3. Port to https
  
 Notes:
-	Currently querying is done on the frontend
+	Currently searching through the notes is done on the frontend
 	I decided to use XHR requests for learning purposes
 
 Features to be added: 
 	Editing of notes
-	Reviewing/Comments of notes
+	Reviewing/Commenting on notes
 	Profile pictures
 
 To run:
 	download mentioned dependencies
 	fill in neccessary passwords, jwt salt etc in share/settings-skeleton.json and move to share/settings.json
 	run make install
-	then run make start
+	then run make start or make debug to start node inspect on 9229
