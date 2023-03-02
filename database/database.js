@@ -4,15 +4,20 @@ const settings = require('../shared/settings.json')
 
 const connection = mysql.createConnection(settings.database)
 
-function makeId(length) {
-	let result = '';
-	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-	for(let i = 0; i < characters.length; ++i){
-		result += characters.charAt(Math.floor(Math.random() * characters.length))
-	}
+const makeId = require('./utils/makeId')	
 
-	return result
-}	
+function insert(command, data){
+	return new Promise(function(resolve, reject) {
+		connection.query(command, data, function (error, result) {
+			if(error)
+				reject(error)
+			if(result.affectedRows === 0)
+				reject("No data was inserted")
+
+			resolve(result)
+		})
+	})
+}
 
 function login(data, callback) {
 	const command = `
@@ -24,23 +29,25 @@ function login(data, callback) {
 	})
 }
 
-function insertNote(payload) {
-	const command = `
-	INSERT INTO notes (name, email, description, author, date, subject) 
-	SELECT ?, ?, ?, ?, ?, ?;
-	`
-	connection.query(command,[payload.name, payload.email, payload.description, payload.author, payload.date, payload.subject], (error, result) => {
+async function insertNote(payload) {
+	try {
+		const command = `
+		INSERT7 INTO notes (name, email, description, author, date, subject) 
+		SELECT ?, ?, ?, ?, ?, ?
+		`
+		const result = await insert(command,[payload.name, payload.email, payload.description, payload.author, payload.date, payload.subject])
+
 		for(let i = 0; i < payload.filenames.length; ++i){
 			const filename = payload.filenames[i]
 			const command_filename = `
 			INSERT INTO notes_images (notes_id, filename)
 			SELECT ?, ?;
 			` 
-
-			connection.query(command_filename, [result.insertId, filename], () => {})
+			await insert(command_filename, [result.insertId, filename])	
 		}
-	})
-
+	} catch(error) {
+		throw new Error(error)
+	}
 }
 
 function copyImages(files, payload) {
@@ -209,8 +216,15 @@ function getUser(email, callback) {
 	WHERE email=?
 	`
 
-	connection.query(command, [email], (error, data) => {
-		callback(error, data[0])
+	return new Promise(function(resolve, reject) {
+		connection.query(command, [email], (error, data) => {
+			if(error)
+				reject(error)
+			if(data.length !== 1)
+				reject("No user found")
+
+			resolve(data[0])
+		})
 	})
 }
 

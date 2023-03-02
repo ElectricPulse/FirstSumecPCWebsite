@@ -40,34 +40,6 @@ function hashPassword(password) {
 }
 
 function addnote (req, res) {
-	db.getUser(req.email, (error, data) => {
-	if(error)
-		sendResponseCreate(res, true)
-	if(!/.*multipart\/form-data.*/.test(req.headers['content-type']))
-		return sendResponseCreated(res, true)
-			
-	const payload = formidable()
-	payload.parse(req, (err, fields, files) => {
-		debugger
-		if(err) 
-			return sendResponseCreated(res, true)
-
-		if(!/\d{4}-\d{2}-\d{2}/.test(fields.date))
-			return sendResponseCreated(res, true)
-		
-		let i = 0
-		while(settings.subjects[i++] != fields.subject) {
-			if(i == settings.subjects.length)
-				return sendResponseCreated(res, true)
-		}
-		
-
-			fields.author = data.username;
-			fields.email = req.email;
-			db.copyImages(files, fields)
-		
-			sendResponseCreated(res, db.insertNote(fields))
-	})
 	})
 }
 
@@ -222,8 +194,37 @@ app.post('/api/register', (req,res) => {
 	})
 })
 
-app.post('/api/addnote', auth, (req, res) => {
-	addnote(req, res)
+app.post('/api/addnote', auth, async (req, res) => {
+	try {
+	db.getUser(req.email)
+	if(error)
+		sendResponseCreate(res, true)
+	if(!/.*multipart\/form-data.*/.test(req.headers['content-type']))
+		return sendResponseCreated(res, true)
+			
+	const payload = formidable()
+	payload.parse(req, (err, fields, files) => {
+		debugger
+		if(err) 
+			return sendResponseCreated(res, true)
+
+		if(!/\d{4}-\d{2}-\d{2}/.test(fields.date))
+			return sendResponseCreated(res, true)
+		
+		let i = 0
+		while(settings.subjects[i++] != fields.subject) {
+			if(i == settings.subjects.length)
+				return sendResponseCreated(res, true)
+		}
+		
+
+			fields.author = data.username;
+			fields.email = req.email;
+			db.copyImages(files, fields)
+		
+			db.insertNote(fields)
+	})
+	} 
 })
 
 app.get('/api/listnotes', (req, res) => {
