@@ -30,6 +30,7 @@ function main(props) {
 	return (
 		<section className={styles.container}>
 		<h2>Resetovanie hesla</h2>
+		<div className={styles.formContainer}>
 		<Form className={styles.form} onSubmit={handleSubmit}>
 
 						<label htmlFor="heslo1">Nove Heslo:</label>
@@ -37,6 +38,7 @@ function main(props) {
 						<label htmlFor="heslo2">Nove Heslo Znovu:</label>
 					<input required type="password" id="heslo2" ref={passwordAgainRef}/>
 		</Form>
+		</div>
 		</section>
 	)	
 }

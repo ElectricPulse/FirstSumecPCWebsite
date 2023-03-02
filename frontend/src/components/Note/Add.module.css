@@ -1,6 +1,7 @@
 .container {
 	background-color: var(--color_primary);
-	padding: 8vw 6vw;
+	padding: 3vw 4vw;
+	padding-top: 2rem;
 	position: relative;
 }
 

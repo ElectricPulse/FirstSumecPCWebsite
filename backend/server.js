@@ -16,7 +16,7 @@ app.get('*index.js', (req,res) => {
 	res.sendFile(path.resolve('../frontend/out/index.js'))
 })
 
-const ip = "localhost"
+const ip = currentSettings.ip
 
 let port = currentSettings.port
 if(!process.env.HOST)

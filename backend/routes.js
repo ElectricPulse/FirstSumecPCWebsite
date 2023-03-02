@@ -15,7 +15,6 @@ app.delete('/api/deleteNote/:id', auth, async (req, res) => {
 		await db.deleteNote(req.params.id, req.email)
 		res.sendStatus(202)
 	} catch(error) {
-		debugger
 		res.sendStatus(500)
 	}
 })
@@ -26,7 +25,6 @@ app.get('/api/listUserNotes', auth, async (req, res) => {
 		res.json(data)
 	} catch(error) {
 		res.sendStatus(500)
-		debugger
 	}
 })
 
@@ -96,7 +94,7 @@ app.post('/api/resetPasswordMail', async (req, res) => {
 			text: `
 			Ahoj, "${user.username}"
 			Aby si zmenil heslo klikni na:
-			http://${currentSettings.ip}:${currentSettings.port}/resetPassword/${token}
+			http://${currentSettings.referenceip}:${currentSettings.port}/resetPassword/${token}
 			`
 		})
 		res.sendStatus(200)
@@ -120,7 +118,7 @@ app.post('/api/register', async (req,res) => {
 			text: `
 			Ahoj, "${username}"
 			Aby si dokončil registráciu klikni na tento link:
-			http://${currentSettings.ip}:${currentSettings.port}/authMail/${token}
+			http://${currentSettings.referenceip}:${currentSettings.port}/authMail/${token}
 			`
 		})
 		res.sendStatus(201)
@@ -182,6 +180,7 @@ app.get('/api/note/:id', async (req,res) => {
 		const note = await db.getNote(req.params.id)
 		res.json(note)
 	} catch(error) {
+		debugger
 		res.sendStatus(404)
 	}
 })

@@ -5,7 +5,7 @@
 	align-items: center;
 	background-color: var(--color_primary);
 	padding-inline: 2rem;
-	margin-inline: 1rem;
+	max-width: 100ch;
 }
 .about > h1 {
 	font-size: 1rem;

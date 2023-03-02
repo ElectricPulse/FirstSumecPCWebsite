@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon routes.js",
     "debug": "nodemon -- --inspect-port=0.0.0.0:9229 --inspect routes.js"
   },
   "dependencies": {

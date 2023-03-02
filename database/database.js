@@ -111,7 +111,6 @@ async function deleteNote(id, email) {
 	DELETE from notes
 	WHERE id=? AND email=?
 	`
-	debugger
 	await singleChange(command, [id, email])
 
 	const command_images = `
@@ -119,8 +118,6 @@ async function deleteNote(id, email) {
 	WHERE notes_id=?
 	`
 	await multipleChanges(command_images, [id])
-
-	debugger
 }
 
 async function getUserNotes(email) {
@@ -160,6 +157,7 @@ async function getUserNotes(email) {
 }
 
 async function getNote(note_id) {
+	debugger
 	const cmd = `
 	SELECT notes.*, JSON_ARRAYAGG(notes_images.filename)
 	FROM notes
@@ -169,7 +167,7 @@ async function getNote(note_id) {
 	GROUP BY notes.id
 	`
 
-	const data = await selection(cmd,[note_id])
+	const data = await select(cmd,[note_id])
 	const note = data[0]
 	const key = 'JSON_ARRAYAGG(notes_images.filename)'
 	note.images = ['']
@@ -183,10 +181,11 @@ async function getNote(note_id) {
 			note.images[++imagesIndex] = ''
 			continue
 		}	
-		note.images[imagesIndex] += note[key][i]
 
-		delete note[key]
+		note.images[imagesIndex] += note[key][i]
 	}
+	delete note[key]
+	return note
 }
 
 async function authMail(token) {

@@ -27,11 +27,13 @@ function main(props) {
 	return (
 		<section className={styles.container}>
 		<h2>Resetovanie hesla</h2>
+		<div className={styles.formContainer}>
 		<Form className={styles.form} onSubmit={handleSubmit}>
 
 						<label htmlFor="email">Email:</label>
 			<input placeholder="simon.dubek@gmail.com" required type="email" id="email" ref={emailRef}/>
 		</Form>
+		</div>
 		</section>
 	)	
 }

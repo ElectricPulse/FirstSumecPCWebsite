@@ -15,8 +15,9 @@
 .dialog {
 	position: fixed;
 	top: 50%;
-	left: 2%;
-	right: 2%;
+	height: 60%;
+	left: 5%;
+	right: 5%;
 	transform: translateY(-50%);
 	display: flex;
 	background: none;
@@ -48,7 +49,7 @@
 }
 
 .centerImage {
-	width: 60vw;
+	width: 50vw;
 	max-width: 90vh;
 }
 
