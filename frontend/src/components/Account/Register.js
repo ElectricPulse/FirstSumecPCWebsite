@@ -21,8 +21,6 @@ function main(props) {
 		const password = passwordRef.current.value
 		const email = emailRef.current.value
 		
-		
-		
 		const xhr = new XMLHttpRequest()
 		xhr.open("POST", "/api/register", true)
 		xhr.setRequestHeader("Content-Type", "application/json")

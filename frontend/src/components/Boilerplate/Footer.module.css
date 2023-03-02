@@ -1,9 +1,9 @@
 .footer {
 	align-self: stretch;
-	padding: 1vw 3vw;
+	padding: 2vw 4vw;
 	background-color: var(--color_primary);
 }
 
-.footer > div {
-	font-size: 0.8rem;
+.footer * {
+	font-size: 0.5rem;
 }

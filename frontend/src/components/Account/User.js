@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import NoteUserPreview from '/components/Note/UserPreview'
 import styles from './User.module.css'
-import { useSelector } from '/store.js'
+import { useSelector, useNotify } from '/store.js'
 
 function main() {
 	const [notes, setNotes] = useState()
 	const store = useSelector(s => s)
+	const notify = useNotify()
 
 	function deleteHandler(noteId) {
 		setNotes((notes) => notes.filter((note) => {
@@ -15,8 +16,11 @@ function main() {
 				xhr.setRequestHeader('Authorization', store.token)
 
 				xhr.onreadystatechange = function() {
-					if(this.readyState === 4 && this.status === 200){
-						console.log("Succesfully deleted")
+					if(this.readyState === 4){
+						if(this.status === 202)
+							notify("Succesfully deleted", false)
+						else 
+							notify("Unsuccesfully deleted", true)
 					}
 				}
 				xhr.send()

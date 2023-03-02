@@ -78,7 +78,7 @@ function main() {
 			</select>
 		</form>
 		<hr className={styles.horizontalRuler}/>
-		{filtered.length == 0 && <div className={styles.notfound}>Nič som nenašiel</div>}
+		{filtered.length === 0 && notes.length !== 0 && <div className={styles.notfound}>Nič som nenašiel</div>}
 		<ul className={styles.list}>
 			{filtered.map((note) => <NotePreview key={note.id} note={note}/>)}
 		</ul>

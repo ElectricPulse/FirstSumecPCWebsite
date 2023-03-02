@@ -1,4 +1,4 @@
-export default function makeId(length) {
+module.exports=function makeId(length) {
 	let result = '';
 	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 	for(let i = 0; i < characters.length; ++i){

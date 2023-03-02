@@ -6,47 +6,82 @@ const connection = mysql.createConnection(settings.database)
 
 const makeId = require('./utils/makeId')	
 
-function insert(command, data){
+function singleChange(command, data){
 	return new Promise(function(resolve, reject) {
 		connection.query(command, data, function (error, result) {
 			if(error)
-				reject(error)
-			if(result.affectedRows === 0)
-				reject("No data was inserted")
+				return reject(error)
+
+			if(result.affectedRows !== 1)
+				return reject("No data was changed")
 
 			resolve(result)
 		})
 	})
 }
 
-function login(data, callback) {
+
+function multipleChanges(command, data){
+	return new Promise(function(resolve, reject) {
+		connection.query(command, data, function (error, result) {
+			if(error)
+				return reject(error)
+
+			if(result.affectedRows === 0)
+				return reject("No data was changed")
+
+			resolve(result)
+		})
+	})
+}
+
+
+function select(command, data){
+	return new Promise(function(resolve, reject) {
+		connection.query(command, data, function(error, result) {
+			if(error)
+				return reject(error)
+
+			if(result.length === 0)
+				return reject("Couldnt fetch anything")
+			
+			resolve(result)
+		})
+	})
+}	
+
+function selectNull(command, data){
+	return new Promise(function(resolve, reject) {
+		connection.query(command, data, function(error, result) {
+			if(error)
+				return reject(error)
+			resolve(result)
+		})
+	})
+}
+
+async function login(data) {
 	const command = `
 	SELECT * FROM accounts
 	WHERE email=? AND password=?;
 	`
-	connection.query(command, [data.email, data.hashedPassword], (error, results) => {
-		callback(error, results?.length == 1)
-	})
+	await select(command, [data.email, data.hashedPassword])
 }
 
 async function insertNote(payload) {
-	try {
-		const command = `
-		INSERT7 INTO notes (name, email, description, author, date, subject) 
-		SELECT ?, ?, ?, ?, ?, ?
-		`
-		const result = await insert(command,[payload.name, payload.email, payload.description, payload.author, payload.date, payload.subject])
+	const command = `
+	INSERT INTO notes (name, email, description, author, date, subject) 
+	SELECT ?, ?, ?, ?, ?, ?
+	`
+	const result = await singleChange(command,[payload.name, payload.email, payload.description, payload.author, payload.date, payload.subject])
 
-		for(let i = 0; i < payload.filenames.length; ++i){
-			const filename = payload.filenames[i]
-			const command_filename = `
-			INSERT INTO notes_images (notes_id, filename)
-			SELECT ?, ?;
+	for(let i = 0; i < payload.filenames.length; ++i){
+		const filename = payload.filenames[i]
+		const command_filename = `
+		INSERT INTO notes_images (notes_id, filename)
+		SELECT ?, ?
 			` 
-			await insert(command_filename, [result.insertId, filename])	
-		}
-	} catch(error) {
-		throw new Error(error)
+		await singleChange(command_filename, [result.insertId, filename])	
 	}
 }
 
@@ -69,21 +104,26 @@ function copyImages(files, payload) {
 
 		fs.copyFileSync(file.filepath, `${__dirname}/images/${filename}`)		
 	}
-	return 0
 }
 
-function deleteNote(id, callback) {
+async function deleteNote(id, email) {
 	const command = `
 	DELETE from notes
-	WHERE id = ?
+	WHERE id=? AND email=?
 	`
+	debugger
+	await singleChange(command, [id, email])
 
-	connection.query(command, [id], (error) => {
-		callback(error)
-	})
+	const command_images = `
+	DELETE from notes_images
+	WHERE notes_id=?
+	`
+	await multipleChanges(command_images, [id])
+
+	debugger
 }
 
-function getUserNotes(email, callback) {
+async function getUserNotes(email) {
 	const command = `
 	SELECT notes.*, JSON_ARRAYAGG(notes_images.filename)
      FROM notes
@@ -92,39 +132,34 @@ function getUserNotes(email, callback) {
      WHERE email = ?
      GROUP BY notes.id
 	`
+	const notes = await selectNull(command, [email])
+	for(note of notes) {
+		const key = 'JSON_ARRAYAGG(notes_images.filename)'
 
-	connection.query(command, [email], (error, data) => {
-for(let i = 0; i < data.length; ++i) {
-			const key = 'JSON_ARRAYAGG(notes_images.filename)'
-			const note = data[i]
+		let inElement = false;
+		let elementIndex = 0;
+		note.images = ['']
+		for(let j = 0; j < note[key].length; ++j){
+			if(note[key][j] === '"') {
+				if(inElement == true) 
+					note.images[++elementIndex] = ''
 
-			let inElement = false;
-			let elementIndex = 0;
-			note.images = ['']
-			for(let j = 0; j < note[key].length; ++j){
-				if(note[key][j] === '"') {
-					if(inElement == true) 
-						note.images[++elementIndex] = ''
-
-					inElement = !inElement
-					continue
-				}
-
-				if(inElement)
-					note.images[elementIndex] += note[key][j]
-					
+				inElement = !inElement
+				continue
 			}
-			delete note[key]
-			note.images.pop()
-		}
-		
-		data.reverse()
 
-		callback(error, data)
-	})
+			if(inElement)
+				note.images[elementIndex] += note[key][j]
+					
+		}
+		delete note[key]
+		note.images.pop()
+	}
+	notes.reverse()
+	return notes
 }
 
-function getNote(note_id, callback) {
+async function getNote(note_id) {
 	const cmd = `
 	SELECT notes.*, JSON_ARRAYAGG(notes_images.filename)
 	FROM notes
@@ -134,37 +169,27 @@ function getNote(note_id, callback) {
 	GROUP BY notes.id
 	`
 
-	connection.query(cmd,[note_id], (error, data) => {
-		if(error || data.length == 0)
-			return callback(true, null)
+	const data = await selection(cmd,[note_id])
+	const note = data[0]
+	const key = 'JSON_ARRAYAGG(notes_images.filename)'
+	note.images = ['']
+	imagesIndex = 0
 
+	for(let i = 0; i < note[key].length; ++i) {
+		if(note[key][i] == '[' || note[key][i] == ']' || note[key][i] == '"' || note[key][i] == ' ')
+			continue
 
-
-		const note = data[0]
-		const key = 'JSON_ARRAYAGG(notes_images.filename)'
-		note.images = ['']
-		imagesIndex = 0
-
-		for(let i = 0; i < note[key].length; ++i) {
-			if(note[key][i] == '[' || note[key][i] == ']' || note[key][i] == '"' || note[key][i] == ' ')
-				continue
-
-			if(note[key][i]== ',') { 
-				note.images[++imagesIndex] = ''
-				continue
-			}
-			
-			
-			note.images[imagesIndex] += note[key][i]
-		}
+		if(note[key][i]== ',') { 
+			note.images[++imagesIndex] = ''
+			continue
+		}	
+		note.images[imagesIndex] += note[key][i]
 
 		delete note[key]
-
-		callback(false, note)
-	})
+	}
 }
 
-function authMail(token, callback) {
+async function authMail(token) {
 	const command = `
 	INSERT INTO accounts (username, password, email)
 	SELECT username, password, email
@@ -174,12 +199,10 @@ function authMail(token, callback) {
 	WHERE token = ?;
 	`
 
-	connection.query(command, [token, token], (error, results) => {
-		callback(error || results.affectedRows === 0)
-	})
+	await multipleChanges(command, [token, token])
 }
 
-function preRegister({username, hashedPassword, email, token}, callback) {
+async function preRegister({username, hashedPassword, email, token}) {
 	const command = `
 	INSERT INTO preregister (username, password, email, token) 
 	SELECT ?, ?, ?, ?
@@ -189,46 +212,30 @@ function preRegister({username, hashedPassword, email, token}, callback) {
 		SELECT 1 FROM accounts WHERE email = ?
 	);
 	`
-	connection.query(command, [username, hashedPassword, email, token, email, email], (error, results) => {
-		callback(error, results.affectedRows === 0)
-	})
+	await singleChange(command, [username, hashedPassword, email, token, email, email])
 }
 
-function changePassword(email, password,callback) {
-	console.log(email, password)
-		
+async function changePassword(email, password) {
 	const command = `
 		UPDATE accounts
 		SET password = ?
 		WHERE email = ?;
 	`
 
-	connection.query(command, [password, email], (error) => {
-
-	callback(error)
-	})
+	await singleChange(command, [password, email])
 }
 
-function getUser(email, callback) {
+async function getUser(email) {
 	const command = `
 	SELECT email, username
 	FROM accounts
 	WHERE email=?
 	`
-
-	return new Promise(function(resolve, reject) {
-		connection.query(command, [email], (error, data) => {
-			if(error)
-				reject(error)
-			if(data.length !== 1)
-				reject("No user found")
-
-			resolve(data[0])
-		})
-	})
+	const user = await select(command, [email])
+	return user[0]
 }
 
-function listNotes(callback) {
+async function listNotes() {
 	const command = `
 	SELECT notes.*, JSON_ARRAYAGG(notes_images.filename)
 	FROM notes
@@ -236,40 +243,34 @@ function listNotes(callback) {
 	ON notes.id = notes_images.notes_id
 	GROUP BY notes.id
 	`
-	connection.query(command, (error, data) => {
-		if(error)
-			return callback(true, null)
-			
-
+	const data = await selectNull(command, [])
 		
-		for(let i = 0; i < data.length; ++i) {
-			const key = 'JSON_ARRAYAGG(notes_images.filename)'
-			const note = data[i]
+	for(let i = 0; i < data.length; ++i) {
+		const key = 'JSON_ARRAYAGG(notes_images.filename)'
+		const note = data[i]
 
-			let inElement = false;
-			let elementIndex = 0;
-			note.images = ['']
-			for(let j = 0; j < note[key].length; ++j){
-				if(note[key][j] === '"') {
-					if(inElement == true) 
-						note.images[++elementIndex] = ''
+		let inElement = false;
+		let elementIndex = 0;
+		note.images = ['']
+		for(let j = 0; j < note[key].length; ++j){
+			if(note[key][j] === '"') {
+				if(inElement == true) 
+					note.images[++elementIndex] = ''
 
-					inElement = !inElement
-					continue
-				}
-
-				if(inElement)
-					note.images[elementIndex] += note[key][j]
-					
+				inElement = !inElement
+				continue
 			}
-			delete note[key]
-			note.images.pop()
+
+			if(inElement)
+				note.images[elementIndex] += note[key][j]
+					
 		}
+		delete note[key]
+		note.images.pop()
+	}
 		
-		data.reverse()
-		debugger
-		callback(false, data)
-	})
+	data.reverse()
+	return data
 }
 
 connection.connect((error) => {
