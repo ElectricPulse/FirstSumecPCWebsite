@@ -1,22 +1,10 @@
-function auth(req, res, next) {
-	const authHeader = req.headers['authorization']
-	const token = authHeader && authHeader.split(' ')[1]
-	if(!token)
-		return res.sendStatus(403)
-
-	jwt.verify(token, settings.jwt.access, (error, data) => {
-		if (error) 
-			return res.sendStatus(403)	
-
-		req.email = data.email
-		req.tokenData = data
-		next()
-	})
-}
-
-function hashPassword(password) {
-	return crypto.pbkdf2Sync(password, settings.passHash.key, settings.passHash.iterations, 64, 'sha512').toString('hex')
-}
+const app = require('./server')
+const path = require('path')
+const auth = require('./auth')
+const hashPassword = require('./hashPassword')
+const formidable = require('formidable')
+const db = require('../database/database.js')
+const sendMail = require('./sendMail')
 
 app.delete('/api/deleteNote/:id', auth, async (req, res) => {
 	try {	
@@ -100,28 +88,13 @@ app.post('/api/resetPasswordMail', async (req, res) => {
 
 			const token = jwt.sign({ email: req.body.email, action: "reset_password" }, settings.jwt.access, {expiresIn: "15m"})
 
-			const transporter = nodemailer.createTransport({
-				service: 'gmail',
-				auth: {
-					user: settings.nodemailer.email,
-					pass: settings.nodemailer.password
-				}
-			})
-			const mail = {
-				from: 'hackermansmurf1@gmail.com',
-				to: email,
+			await sendMail(mail, {
 				subject: 'Zabudnuté heslo, FirstSumecPC',
 				text: `
 				Ahoj, "${data.username}"
 				Aby si zmenil heslo klikni na:
 				http://${currentSettings.ip}:${currentSettings.port}/resetPassword/${token}
 				`
-			}	
-
-			transporter.sendMail(mail, (error, info) => {
-				if(error)
-					throw new Error()
-				res.sendStatus(200)
 			})
 	} catch(error) {
 		res.sendStatus(403)
@@ -138,32 +111,16 @@ app.post('/api/register', async (req,res) => {
 		const token = crypto.randomBytes(8).toString('hex')	
 		debugger
 		await db.preRegister({username, hashedPassword, email, token})
-
-		const transporter = nodemailer.createTransport({
-			service: 'gmail',
-			auth: {
-				user: settings.nodemailer.email,
-				pass: settings.nodemailer.password
-			}
-		})
-		const mail = {
-			from: 'hackermansmurf1@gmail.com',
-			to: email,
+		await sendMail(email, {
 			subject: 'Overenie mailu, FirstSumecPC',
 			text: `
 			Ahoj, "${username}"
 			Aby si dokončil registráciu klikni na tento link:
 			http://${currentSettings.ip}:${currentSettings.port}/authMail/${token}
 			`
-		}	
-
-		transporter.sendMail(mail, (error, info) => {
-			if(error)
-				throw new Error()
-
-			res.sendStatus(201)
 		})
-	} catch(error) {
+
+		} catch(error) {
 		res.sendStatus(500)
 	}	
 })
@@ -224,4 +181,17 @@ app.get('/api/note/:id', async (req,res) => {
 		res.sendStatus(404)
 	}
 })
+
+app.get('*', (req, res) => {
+	res.sendFile(path.resolve('../frontend/out/index.html'))
+})
+
+
+
+
+
+
+
+
+
 
